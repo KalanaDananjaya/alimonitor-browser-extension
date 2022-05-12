@@ -1,0 +1,724 @@
+{
+	"id" : 0,
+	"name" : "ALICE Repository",
+	"prefix" : "//alimonitor.cern.ch",
+	"url" : "",
+	"children" : [
+		{
+			"id" : 5,
+			"name" : "Google Map",
+			"url" : "/map.jsp",
+			"children" : []
+		},
+		{
+			"id" : 6,
+			"name" : "Shifter's dashboard",
+			"url" : "/dashboard/",
+			"children" : []
+		},
+		{
+			"id" : 7,
+			"name" : "Run Condition Table",
+			"url" : "/configuration/",
+			"children" : []
+		},
+		{
+			"id" : 8,
+			"name" : "Production Overview",
+			"url" : "/configuration/pot.jsp",
+			"children" : []
+		},
+		{
+			"id" : 9,
+			"name" : "Production Info",
+			"url" : null,
+			"children" : [
+				{
+					"id" : 9000,
+					"name" : "Run view",
+					"url" : "/runview/",
+					"children" : []
+				},
+				{
+					"id" : 9001,
+					"name" : "RAW production cycles",
+					"url" : "/production/raw.jsp",
+					"children" : []
+				},
+				{
+					"id" : 9002,
+					"name" : "RAW activities",
+					"url" : "/prod/?t=3",
+					"children" : []
+				},
+				{
+					"id" : 9003,
+					"name" : "LEGO trains",
+					"url" : "/trains/",
+					"children" : []
+				},
+				{
+					"id" : 9004,
+					"name" : "Analysis train",
+					"url" : "/prod/",
+					"children" : []
+				},
+				{
+					"id" : 9005,
+					"name" : "MC production cycles",
+					"url" : "/job_details.jsp",
+					"children" : []
+				},
+				{
+					"id" : 9006,
+					"name" : "MC activities",
+					"url" : "/prod/?t=4",
+					"children" : []
+				},
+				{
+					"id" : 9007,
+					"name" : "QA feedback status",
+					"url" : "/QA/",
+					"children" : []
+				}
+			]
+		},
+		{
+			"id" : 10,
+			"name" : "Job Information",
+			"url" : "/show?page=jobStatus.html",
+			"children" : [ {
+				"id" : 101,
+				"name" : "Site Views",
+				"url" : null,
+				"children" : [
+						{
+							"id" : 1011,
+							"name" : "Summary Plots",
+							"url" : "/display?page=jobStatusSites_TOTALS",
+							"children" : []
+						},
+						{
+							"id" : 1012,
+							"name" : "Job States",
+							"url" : "/display?page=jobStatusSites_RUNNING",
+							"children" : []
+						},
+						{
+							"id" : 1013,
+							"name" : "Jobs per site",
+							"url" : "/display?page=jobs_per_site",
+							"children" : []
+						},
+						{
+							"id" : 1014,
+							"name" : "Jobs per site table",
+							"url" : "/stats?page=current_job_status",
+							"children" : []
+						},
+						{
+							"id" : 1015,
+							"name" : "Error ratios",
+							"url" : "/display?page=jobs/ratio",
+							"children" : []
+						},
+						{
+							"id" : 1017,
+							"name" : "Resource usage",
+							"url" : "/display?page=jobResUsageSum_time_cpu",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 102,
+					"name" : "User Views",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1020,
+							"name" : "Aggregated Info",
+							"url" : "/display?page=jpu_agg/jpu_RUNNING",
+							"children" : []
+						},
+						{
+							"id" : 1021,
+							"name" : "Per user history",
+							"url" : "/display?page=jpu/jobs_per_user",
+							"children" : []
+						},
+						{
+							"id" : 1022,
+							"name" : "All users history",
+							"url" : "/display?page=jpu/jpu_RUNNING",
+							"children" : []
+						},
+						{
+							"id" : 1023,
+							"name" : "Grid packages",
+							"url" : "/packages",
+							"children" : []
+						},
+						{
+							"id" : 1024,
+							"name" : "Quotas",
+							"url" : "/users/quotas.jsp",
+							"children" : []
+						}
+					]
+				},{
+					"id" : 103,
+					"name" : "Task queue",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1031,
+							"name" : "Task queue summary",
+							"url" : "/display?page=jobStatusCS_run_params",
+							"children" : []
+						},
+						{
+							"id" : 1032,
+							"name" : "Jobs in TQ table",
+							"url" : "/job_stats.jsp",
+							"children" : []
+						},
+						{
+							"id" : 1033,
+							"name" : "Matching per site",
+							"url" : "/display?page=jobs/matching_per_site",
+							"children" : []
+						},
+						{
+							"id" : 1034,
+							"name" : "Matching histogram",
+							"url" : "/display?page=jobs/histogram",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 108,
+					"name" : "Multicore jobs",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1080,
+							"name" : "Per site",
+							"url" : "/display?page=jobs/num_cores_site",
+							"children" : []
+						},
+						{
+							"id" : 1081,
+							"name" : "Per no. of cores",
+							"url" : "/display?page=jobs/num_cores",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 104,
+					"name" : "Job timings",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1080,
+							"name" : "By site",
+							"url" : "/Correlations?page=timings/persite",
+							"children" : []
+						},
+						{
+							"id" : 1081,
+							"name" : "Per user",
+							"url" : "/Correlations?page=timings/peruser",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 107,
+					"name" : "Memory Profiles",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1070,
+							"name" : "Offending jobs",
+							"url" : "/display?page=memory/offenders",
+							"children" : []
+						},
+						{
+							"id" : 1072,
+							"name" : "By site",
+							"url" : "/display?page=jpu/mem_combined",
+							"children" : []
+						},
+						{
+							"id" : 1071,
+							"name" : "Per user",
+							"url" : "/display?page=jps/mem_combined",
+							"children" : []
+						},
+						{
+							"id" : 1073,
+							"name" : "Current jobs",
+							"url" : "/memory/",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 105,
+					"name" : "Federation views",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1051,
+							"name" : "Resources",
+							"url" : "/display?page=federations/histogram_time_run_si2k",
+							"children" : []
+						},
+						{
+							"id" : 1052,
+							"name" : "Jobs",
+							"url" : "/display?page=federations/histogram_jobs_done",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 106,
+					"name" : "Job Agents",
+					"url" : null,
+					"children" : [ 
+						{
+							"id" : 1061,
+							"name" : "CE status",
+							"url" : "/display?page=ja",
+							"children" : []
+						},
+						{
+							"id" : 1062,
+							"name" : "Active JAs",
+							"url" : "/display?page=ja_status",
+							"children" : []
+						},
+						{
+							"id" : 1063,
+							"name" : "Cumulative JAs",
+							"url" : "/display?page=ja_status",
+							"children" : []
+						}
+					]
+				}
+			]
+		},
+		{
+			"id" : 20,
+			"name" : "SE Information",
+			"url" : null,
+			"children" : [
+				{
+					"id" : 201,
+					"name" : "Status",
+					"url" : "/stats?page=SE/table",
+					"children" : []
+				},
+				{
+					"id" : 203,
+					"name" : "Files",
+					"url" : "/display?page=seTraffic_files_rd",
+					"children" : []
+				},
+				{
+					"id" : 204,
+					"name" : "xrootd",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 2041,
+							"name" : "SEs overview",
+							"url" : "/display?page=xrootdse/SEs",
+							"children" : []
+						},
+						{
+							"id" : 2042,
+							"name" : "Per SE details",
+							"url" : null,
+							"children" : [
+								{
+									"id" : 20421,
+									"name" : "Traffic",
+									"url" : "/display?page=xrootdse/by_se",
+									"children" : []
+								},
+								{
+									"id" : 20422,
+									"name" : "Load",
+									"url" : "/display?page=xrootdse/by_se_load",
+									"children" : []
+								},
+								{
+									"id" : 20423,
+									"name" : "CPU Usage",
+									"url" : "display?page=xrootdse/by_se_cpu_usage",
+									"children" : []
+								},
+								{
+									"id" : 20424,
+									"name" : "Sockets",
+									"url" : "/display?page=xrootdse/by_se_sockets",
+									"children" : []
+								}
+							]
+						}
+					]
+				},
+				{
+					"id" : 207,
+					"name" : "Cleanup",
+					"url" : "display?page=orphans/total",
+					"children" : []
+				},
+				{
+					"id" : 208,
+					"name" : "CTA",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 2080,
+							"name" : "Staging queue",
+							"url" : "https://monit-grafana.cern.ch/d/CCvwIhoMk/cta-archive-and-retrieve-tape-queues?orgid=29&var-vo=alice",
+							"children" : []
+						},
+						{
+							"id" : 2081,
+							"name" : "EOS status",
+							"url" : "https://filer-carbon.cern.ch/grafana/d/000000036/eos-control-tower?orgid=1&refresh=5m&var-instance=ctaalice",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 209,
+					"name" : "Crawler",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 2090,
+							"name" : "Health metrics",
+							"url" : "/crawler",
+							"children" : []
+						},
+						{
+							"id" : 2091,
+							"name" : "Status codes",
+							"url" : "/display?page=crawler/status",
+							"children" : []
+						},
+						{
+							"id" : 2092,
+							"name" : "PFN samples",
+							"url" : "/crawlerPFNSamples/",
+							"children" : []
+						},
+						{
+							"id" : 2093,
+							"name" : "Status overview",
+							"url" : "/crawlerStatusOverview/",
+							"children" : []
+						}
+					]
+				}
+			]
+		},
+		{
+			"id" : 30,
+			"name" : "Services",
+			"url" : null,
+			"children" : [
+				{
+					"id" : 301,
+					"name" : "Central Services",
+					"url" : "/show?page=racks.html",
+					"children" : [
+						{
+							"id" : 3011,
+							"name" : "Central machines",
+							"url" : "/stats?page=machines/machines",
+							"children" : []
+						},
+						{
+							"id" : 3012,
+							"name" : "APIServers",
+							"url" : "/display?page=api_sessions",
+							"children" : []
+						},
+						{
+							"id" : 3013,
+							"name" : "DAQ Registration",
+							"url" : "/display?page=DAQ2/daq_size",
+							"children" : []
+						},
+						{
+							"id" : 3014,
+							"name" : "ML Repository",
+							"url" : "/info.jsp",
+							"children" : []
+						},
+						{
+							"id" : 3015,
+							"name" : "UPSs",
+							"url" : "/stats?page=ups/ups",
+							"children" : []
+						},
+						{
+							"id" : 3016,
+							"name" : "Sensors",
+							"url" : "/stats?page=machines/ipmi",
+							"children" : []
+						},
+						{
+							"id" : 3017,
+							"name" : "VirtualBox",
+							"url" : "/stats?page=machines%2Fvirtualbox",
+							"children" : []
+						},
+						{
+							"id" : 3018,
+							"name" : "Build machines",
+							"url" : "/stats?page=machines%2Fbuild",
+							"children" : []
+						},
+						{
+							"id" : 3019,
+							"name" : "Network traffic",
+							"url" : "/display?page=machines/net/uplink",
+							"children" : []
+						},
+						{
+							"id" : 3010,
+							"name" : "Catalogue stats",
+							"url" : "/display?page=catalogue/rows",
+							"children" : []
+						},
+						{
+							"id" : 30100,
+							"name" : "MySQL",
+							"url" : "/display?page=mysql/commands_cache",
+							"children" : []
+						},
+						{
+							"id" : 30101,
+							"name" : "Cassandra",
+							"url" : "/display?page=cassandra/read_latency",
+							"children" : []
+						},
+						{
+							"id" : 30102,
+							"name" : "iostat",
+							"url" : "/stats?page=machines/ioutil",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 302,
+					"name" : "Site Services",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 3020,
+							"name" : "Current issues",
+							"url" : "/siteinfo/issues.jsp",
+							"children" : []
+						},
+						{
+							"id" : 3021,
+							"name" : "Site overview",
+							"url" : "/siteinfo/",
+							"children" : []
+						},
+						{
+							"id" : 3022,
+							"name" : "VO Boxes",
+							"url" : "/stats?page=vobox_status",
+							"children" : []
+						},
+						{
+							"id" : 3023,
+							"name" : "Services Status",
+							"url" : "/stats?page=services_status",
+							"children" : []
+						},
+						{
+							"id" : 3024,
+							"name" : "MonaLisa",
+							"url" : "/stats?page=siteMLstatus",
+							"children" : []
+						},
+						{
+							"id" : 3025,
+							"name" : "Proxies",
+							"url" : "/stats?page=proxies",
+							"children" : []
+						},
+						{
+							"id" : 3026,
+							"name" : "Packages",
+							"url" : "/packages/list.jsp",
+							"children" : []
+						},
+						{
+							"id" : 3027,
+							"name" : "VoBox temp",
+							"url" : "/temp.jsp",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 303,
+					"name" : "CCDB",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 3030,
+							"name" : "REST servers",
+							"url" : "/stats?page=ccdb%2Fserver",
+							"children" : []
+						},
+						{
+							"id" : 3031,
+							"name" : "Usage",
+							"url" : "/display?page=ccdb%2Fusage",
+							"children" : []
+						},
+						{
+							"id" : 3032,
+							"name" : "DB status",
+							"url" : "/stats?page=ccdb%2Fservice",
+							"children" : []
+						},
+						{
+							"id" : 3033,
+							"name" : "DB usage",
+							"url" : "/display?page=ccdb%2Fpostgres",
+							"children" : []
+						},
+						{
+							"id" : 3034,
+							"name" : "Multicast rcv",
+							"url" : "/stats?page=ccdb%2Fmulticast",
+							"children" : []
+						}
+					]
+				},
+				{
+					"id" : 304,
+					"name" : "epn2eos",
+					"url" : null,
+					"children" : [
+						{
+							"id" : 3040,
+							"name" : "Status",
+							"url" : "/stats?page=epn2eos/overview",
+							"children" : []
+						},
+						{
+							"id" : 3041,
+							"name" : "Run list",
+							"url" : "/DAQ/",
+							"children" : []
+						},
+						{
+							"id" : 3042,
+							"name" : "Data rate",
+							"url" : "/display?page=epn2eos%2Fdata_transfers_copy_rate",
+							"children" : []
+						},
+						{
+							"id" : 3043,
+							"name" : "Accumulated data",
+							"url" : "/display?page=epn2eos/global_copy_rate",
+							"children" : []
+						}
+					]
+				}
+			]
+		},
+		{
+			"id" : 40,
+			"name" : "Network Traffic",
+			"url" : null,
+			"children" : [
+				{
+					"id" : 400,
+					"name" : "Server total",
+					"url" : "/display?page=xrdagg/total",
+					"children" : []
+				},
+				{
+					"id" : 401,
+					"name" : "LAN/WAN traffic",
+					"url" : "/display?page=xrdagg/total",
+					"children" : []
+				},
+				{
+					"id" : 402,
+					"name" : "Accumulated data",
+					"url" :"/display?page=xrdagg/lan_wan",
+					"children" : []
+				},
+				{
+					"id" : 403,
+					"name" : "Clients per SE",
+					"url" : "/display?page=xrdagg/site",
+					"children" : []
+				},
+				{
+					"id" : 4040,
+					"name" : "SEs per client",
+					"url" : "/display?page=xrdagg/client",
+					"children" : []
+				},
+				{
+					"id" : 405,
+					"name" : "Bandwidth tests",
+					"url" : "/speed/",
+					"children" : []
+				}
+			]
+		},
+		{
+			"id" : 60,
+			"name" : "Data Transfers",
+			"url" : "/show?page=ftdStatus.html",
+			"children" : [
+				{
+					"id" : 601,
+					"name" : "Replication queue",
+					"url" : "/transfers",
+					"children" : []
+				},
+				{
+					"id" : 602,
+					"name" : "Transfer states",
+					"url" :"/display?page=FTD/CS",
+					"children" : []
+				},
+				{
+					"id" : 603,
+					"name" : "Transfer speed",
+					"url" : "//display?page=FTD/SE",
+					"children" : []
+				}
+			]
+		},
+		{
+			"id" : 100,
+			"name" : "Dynamic charts",
+			"url" : "/correlations/",
+			"children" : []
+		}
+	]
+}
