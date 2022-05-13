@@ -2,7 +2,7 @@
 	"id" : 0,
 	"name" : "ALICE Repository",
 	"prefix" : "//alimonitor.cern.ch",
-	"url" : "",
+	"url" : null,
 	"children" : [
 		{
 			"id" : 5,
