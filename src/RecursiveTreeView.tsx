@@ -7,7 +7,7 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import { useState, useEffect } from 'react';
 import JsonMenu from './menu.json';
 
-function RecursiveTreeView() {
+function RecursiveTreeView(props) {
 
 const [menu, setMenu] = useState(JsonMenu);
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 const handleTreeItemClick = (node) => {
-    console.log(node);
+    props.toggleMenu();
     var url = node.url;
     if (node.children.length === 0) {
         if (url === null) {
@@ -42,7 +42,9 @@ const handleTreeItemClick = (node) => {
 const classes = useStyles();
 
     const renderTree = (node) => {
+        // console.log(node.children.length)
         if (node.children.length > 0 && node.url !== null) {
+            // console.log('inside')
             const newNode = {
                 id : node.id,
                 name : node.name,
@@ -50,14 +52,14 @@ const classes = useStyles();
                 children: []
             }
             return (
-                <TreeItem key={node.id.toString()} nodeId={node.id.toString()} label={node.name} onLabelClick={() => handleTreeItemClick(node)}>
-                    <TreeItem key={newNode.id.toString()} nodeId={newNode.id.toString()} label={newNode.name} onLabelClick={() => handleTreeItemClick(newNode)}></TreeItem>
+                <TreeItem key={node.id} nodeId={node.id} label={node.name} onLabelClick={() => handleTreeItemClick(node)}>
+                    <TreeItem key={newNode.id} nodeId={newNode.id} label={newNode.name} onLabelClick={() => handleTreeItemClick(newNode)}></TreeItem>
                     {Array.isArray(node.children) ? node.children.map((node) => renderTree(node)) : null}
                 </TreeItem>
             ) 
         } else {
             return (
-                <TreeItem key={node.id.toString()} nodeId={node.id.toString()} label={node.name} onLabelClick={() => handleTreeItemClick(node)}>
+                <TreeItem key={node.id} nodeId={node.id} label={node.name} onLabelClick={() => handleTreeItemClick(node)}>
                     {Array.isArray(node.children) ? node.children.map((node) => renderTree(node)) : null}
                 </TreeItem>
             )
@@ -70,6 +72,7 @@ const classes = useStyles();
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpanded={['root']}
             defaultExpandIcon={<ChevronRightIcon />}
+            // onNodeSelect={toggleClass()}
         >
             {renderTree(menu)}
         </TreeView>

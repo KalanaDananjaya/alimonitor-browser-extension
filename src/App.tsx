@@ -3,15 +3,18 @@ import { createTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useMemo, useState, useEffect } from 'react';
 import RecursiveTreeView from './RecursiveTreeView';
-import Guage from './Guages';
-import { makeStyles } from '@material-ui/core/styles';
+import Base from './Base';
 
 function App() {
 
   
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [menuOpened, setMenuOpened] = useState(false);
 
-
+  const toggleMenu = () => {
+    console.log('toggled', menuOpened)
+    setMenuOpened(!menuOpened);
+  };
 
   const theme = useMemo(
     () =>
@@ -33,54 +36,13 @@ function App() {
     [prefersDarkMode]
   );
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
-
-  const classes = useStyles();
-
-    return (
-      <ThemeProvider theme={theme}>
-        <RecursiveTreeView></RecursiveTreeView>
-  
-        <div className={classes.root}>
-          <Grid container spacing={3}>
-           <Grid item xs={12}>
-              <Typography align="center" variant="h1">AliMonitor Plugin</Typography> 
-            </Grid>
-            <Grid item xs={12}>
-              <Guage></Guage>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.paper}>xs=6</Paper>
-            </Grid>
-            <Grid item xs={6}>
-              <Paper className={classes.paper}>xs=6</Paper>
-            </Grid>
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-            <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-            </Grid>
-          </Grid>
-    </div>
-
-      </ThemeProvider>
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <RecursiveTreeView toggleMenu={toggleMenu}></RecursiveTreeView>
+      <Base menuOpened={menuOpened}></Base>
+    
+    </ThemeProvider>
+  );
 
   
 }

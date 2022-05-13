@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import GaugeChart from 'react-gauge-chart';
 import axios from 'axios';
-import { Button, Grid, ThemeProvider, Paper, Box } from '@material-ui/core'
+import { Button, Grid, ThemeProvider, Paper, Box, Typography } from '@material-ui/core'
+import alert from './images/alert.png'
 
 function Guage()  {
   const [currentPercent, setCurrentPercent] = useState();
@@ -13,9 +14,13 @@ function Guage()  {
   const [runningJobsPerc, setRunningJobsPerc] = useState(0);
   const [error, setError] = useState(null);
   const [seDetails, setSEdetails] = useState([]);
+//   const [usedGBs, setUsedGBs] = useState(0);
+//   const [availGBs, setAvailGBs] = useState(0);
+  const [storageLeftPerc, setStorageLeftPerc] = useState(0);
 
-    // const prefix = "http://alimonitor.cern.ch/";
-    const prefix = "";
+// console.log('usedGBs', usedGBs)
+    const prefix = "http://alimonitor.cern.ch/";
+    // const prefix = "";
 
   const updateJobDetails = () => {
     axios
@@ -54,9 +59,26 @@ const updateSEdetails = () => {
       setSEdetails(seDetails);
       console.log('seDetals', seDetails);
 
+      let usedGBs = 0;
+      let availGBs = 0;
+
       // const grouped = _.groupBy(seDetails, se => se.Node);
-      const groupedSEs = groupBy(seDetails, "Node");
-      console.log('resit',groupedSEs)
+      const groupedSEbyName = groupBy(seDetails, "Node");
+      const groupeSEbyParams = groupBy(seDetails, "Parameter");
+      console.log('groupedSEbyName',groupedSEbyName);
+      console.log('groupeSEbyParams',groupeSEbyParams);
+
+      groupeSEbyParams.used_gb.forEach((se) => {
+        console.log( "current value:", usedGBs, "added value:",  se.Value)
+        usedGBs = usedGBs + Math.max(0,parseFloat(se.Value));
+        console.log('updatedValue', usedGBs);
+      });
+      groupeSEbyParams.avail_gb.forEach((se) => {
+        console.log( "value", se.Value)
+        availGBs = availGBs + Math.max(0,parseFloat(se.Value));
+      });
+      console.log(usedGBs, availGBs)
+      setStorageLeftPerc((usedGBs/availGBs)*1)
     })
     .catch(function (error) {
         console.log(error);
@@ -83,7 +105,13 @@ useEffect(() => {
   }, []);
 
 const chartStyle = {
-    height: 250,
+    height: '50%'
+}
+
+const imageStyle = {
+    display: 'block',
+    margin: 'auto',
+    height: '30%'
 }
 
   return (
@@ -92,21 +120,29 @@ const chartStyle = {
             {/* <Grid item xs={12}>
               <Paper className={"a"}>xs=12</Paper>
             </Grid> */}
-            <Grid item xs={6}>
+            <Grid item xs={4} md={4} lg={4}>
               <GaugeChart id="gauge-chart2"
                 nrOfLevels={20} 
-                colors={["#33FF4C", "#FF0000"]} 
+                colors={["#FF0000", "#33FF4C"]} 
+                textColor="#464A4F"
                 percent={runningJobsPerc} 
                 style={chartStyle}
               />
+              <Typography align="center">Succeful Jobs</Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={4} md={4} lg={4}>
               <GaugeChart id="gauge-chart2" 
                 nrOfLevels={20} 
-                colors={["#FF0000", "#33FF4C"]} 
-                percent={runningJobsPerc} 
+                colors={["#33FF4C", "#FF0000"]} 
+                textColor="#464A4F"
+                percent={storageLeftPerc} 
                 style={chartStyle}
               />
+              <Typography align="center">Storage left</Typography>
+            </Grid>
+            <Grid item xs={4} md={4} lg={4}>
+                <img src={alert} alt="alert" style={imageStyle} />
+                <Typography align="center">x Alerts</Typography>
             </Grid>
         </Grid>
     </>
