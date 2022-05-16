@@ -1,4 +1,3 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -11,99 +10,81 @@ import { Typography } from '@material-ui/core';
 
 function RecursiveTreeView(props) {
 
-const [menu, setMenu] = useState(JsonMenu);
-// const [menuUrls, setMenuUrls] = useState({});
-const menuUrls = {}
+const [menuItems, setMenuItems] = useState(JsonMenu);
+const menuItemUrls = {}
 
 const useStyles = makeStyles({
     root: {
         height: 110,
         flexGrow: 1,
         maxWidth: 400,
+        zIndex:1000,
+        position: 'relative'
     },
 });
 
 
 
-const updatedMenu = (menu) => {
-    console.log(menu, menu.children, menu.children.length)
-    if (menu.children.length > 0) {
-        
-        // console.log('actual menu', menu)
-        console.log('menu url is', menu.url, menu.url !== "", menu.url !==undefined)
-        if (menu.url !== undefined && menu.url !== null && menu.url !== "") {
+const populateMenu = (menuItem) => {
+    if (menuItem.children.length > 0) {
+        // If menu item has no children and has a url, add a clone of the menu item at the sub menu with its url
+        if (menuItem.url !== undefined && menuItem.url !== null && menuItem.url !== "") {
             const clonedChild = {
-                id : menu.id + "X",
-                name : menu.name,
-                url : menu.url,
+                id : menuItem.id + "X",
+                name : menuItem.name,
+                url : menuItem.url,
                 children : []
             }
-            menu.url = '';
-            menu.children.push(clonedChild)
-            console.log('pushed', clonedChild, 'as child of ', menu)
+            menuItem.url = '';
             // add child
-            console.log('settign to null', menu.id)
-            
+            menuItem.children.push(clonedChild)
         }
     }
     
-    var test = menuUrls;
-    menuUrls[menu.id] = menu.url;
-    // setMenuUrls(menuUrls)
-    // console.log('menuUrls',menuUrls)
+    menuItemUrls[menuItem.id] = menuItem.url;
 
-    if (menu.children.length > 0) {
-        // console.log('children exists', menu.children)
-        for (let index in menu.children) {
-            let child = menu.children[index]
-            // console.log('iterating childs', child.id, index, child)
-            updatedMenu(child)
+    if (menuItem.children.length > 0) {
+        for (let index in menuItem.children) {
+            let child = menuItem.children[index]
+            populateMenu(child)
         }
-        // console.log("finished iterating children of", menu.id);
     } else {
         return
     }
 }
 useEffect(() => {
 
-    updatedMenu(menu)
-    setMenu(menu)
-    console.log('update is', menu)
-    console.log('final menuUrls is', menuUrls['0'], Object.keys(menuUrls), Object.entries(menuUrls))
+    populateMenu(menuItems)
+    setMenuItems(menuItems)
   }, []);
 
 
-// console.log('final menuUrls is', menuUrls)
-// setMenuUrls(menuUrls)
-// console.log('keys are', menuUrls.keys())
+
+
+const checkMenuExpanded = (nodeId) => {
+    if (nodeId == 0) {
+        props.setMenuOpened(!props.menuOpened)
+    }
+}
 
 
 const handleTreeItemClick = (event, nodeId) => {
-    // console.log(menu)
-    // props.toggleMenu();
-    console.log('clicked nodeId is', nodeId, menuUrls[nodeId], "-")
-    var url = menuUrls[nodeId];
-
-    if(menuUrls.hasOwnProperty(nodeId)){
-        console.log("EXITS")
+    checkMenuExpanded(nodeId);
+    console.log('clicked nodeId is', nodeId, menuItemUrls[nodeId], "-")
+    
+    var url = menuItemUrls[nodeId];
+    if (url === null || url ==='' || url === undefined) {
+        // do nothing
+        // chrome.tabs.create({ url: newURL });
+    } 
+    // If the url starts with http, do not add the prefix
+    else if (/^(http)/.test(url)){
+        // chrome.tabs.create({ url: newURL });
+        window.open(url, "_blank");
     } else {
-        console.log("NOT EXISTS")
+        // chrome.tabs.create({ url: newURL });
+        window.open(menuItems.prefix + url, "_blank");
     }
-    // if (node.children.length === 0) {
-        console.log('url is ', url)
-        if (url === null || url ==='' || url === undefined) {
-            // do nothing
-            // chrome.tabs.create({ url: newURL });
-        } 
-        // If the url starts with http, do not add the prefix
-        else if (/^(http)/.test(url)){
-            // chrome.tabs.create({ url: newURL });
-            window.open(url, "_blank");
-        } else {
-            // chrome.tabs.create({ url: newURL });
-            window.open(menu.prefix + url, "_blank");
-        }
-    // }
   
 }
 
@@ -125,7 +106,7 @@ const classes = useStyles();
             defaultExpandIcon={<ChevronRightIcon />}
             onNodeSelect = {(ele,node)=>{handleTreeItemClick(ele,node)}}
         >
-            {renderTree(menu)}
+            {renderTree(menuItems)}
         </TreeView>
     );
 

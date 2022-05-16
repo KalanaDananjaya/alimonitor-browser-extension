@@ -18,7 +18,8 @@ function Base (props) {
     const mainStyle = (menuOpened) => {
         if (menuOpened) {
             return ({
-                opacity: 0
+                opacity: 0.25,
+                zindex: 0
             })
         } else {
             return ({opacity: 100})
@@ -31,9 +32,6 @@ function Base (props) {
     return (
             <div className="main" style={mainStyle(props.menuOpened)}>
                 <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <Typography align="center" variant="h1">AliMonitor Plugin</Typography> 
-                    </Grid>
                     <Grid item xs={12}>
                     <Guage></Guage>
                     </Grid>

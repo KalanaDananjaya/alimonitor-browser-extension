@@ -11,11 +11,6 @@ function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [menuOpened, setMenuOpened] = useState(false);
 
-  const toggleMenu = () => {
-    console.log('toggled', menuOpened)
-    setMenuOpened(!menuOpened);
-  };
-
   const theme = useMemo(
     () =>
     createTheme({
@@ -38,7 +33,8 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <RecursiveTreeView toggleMenu={toggleMenu}></RecursiveTreeView>
+      <Typography variant="h1" align="center">AliMonitor</Typography>
+      <RecursiveTreeView menuOpened={menuOpened} setMenuOpened={setMenuOpened}></RecursiveTreeView>
       <Base menuOpened={menuOpened}></Base>
     
     </ThemeProvider>

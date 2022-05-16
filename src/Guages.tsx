@@ -6,30 +6,24 @@ import { Button, Grid, ThemeProvider, Paper, Box, Typography } from '@material-u
 import alert from './images/alert.png'
 
 function Guage()  {
-  const [currentPercent, setCurrentPercent] = useState();
-  const [arcs, setArcs] = useState([0.5, 0.3, 0.2]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [runningJobs, setRunningJobs] = useState(0);
-  const [maxActiveJobs, setMaxActiveJobs] = useState(0);
   const [runningJobsPerc, setRunningJobsPerc] = useState(0);
   const [error, setError] = useState(null);
   const [seDetails, setSEdetails] = useState([]);
-//   const [usedGBs, setUsedGBs] = useState(0);
-//   const [availGBs, setAvailGBs] = useState(0);
   const [storageLeftPerc, setStorageLeftPerc] = useState(0);
 
 // console.log('usedGBs', usedGBs)
-    const prefix = "http://alimonitor.cern.ch/";
-    // const prefix = "";
+    let prefix = "http://alimonitor.cern.ch/";
+    // prefix = "";
 
   const updateJobDetails = () => {
+    let maxActiveJobs = 0;
+    let runningJobs = 0
     axios
     .get(prefix + "numbers.jsp?series=runningjobs")
     .then(function (response) {
       setIsLoaded(true);
-      const runningJobs = response.data;
-      setRunningJobs(runningJobs);
-      console.log('running', response.data);
+      runningJobs = response.data;
     })
     .catch(function (error) {
         console.log(error);
@@ -39,11 +33,9 @@ function Guage()  {
         .get(prefix + "numbers.jsp?series=maxactive")
         .then(function (response) {
         setIsLoaded(true);
-        const maxActiveJobs = response.data;
+        maxActiveJobs = response.data;
         const runningJobsPerc = runningJobs/maxActiveJobs;
-        setMaxActiveJobs(maxActiveJobs);
         setRunningJobsPerc(runningJobsPerc);
-        console.log('max', response.data);
         })
         .catch(function (error) {
             console.log(error);
@@ -62,23 +54,17 @@ const updateSEdetails = () => {
       let usedGBs = 0;
       let availGBs = 0;
 
-      // const grouped = _.groupBy(seDetails, se => se.Node);
       const groupedSEbyName = groupBy(seDetails, "Node");
       const groupeSEbyParams = groupBy(seDetails, "Parameter");
-      console.log('groupedSEbyName',groupedSEbyName);
-      console.log('groupeSEbyParams',groupeSEbyParams);
 
       groupeSEbyParams.used_gb.forEach((se) => {
-        console.log( "current value:", usedGBs, "added value:",  se.Value)
         usedGBs = usedGBs + Math.max(0,parseFloat(se.Value));
-        console.log('updatedValue', usedGBs);
       });
       groupeSEbyParams.avail_gb.forEach((se) => {
         console.log( "value", se.Value)
         availGBs = availGBs + Math.max(0,parseFloat(se.Value));
       });
-      console.log(usedGBs, availGBs)
-      setStorageLeftPerc((usedGBs/availGBs)*1)
+      setStorageLeftPerc((availGBs/(usedGBs+availGBs)))
     })
     .catch(function (error) {
         console.log(error);
@@ -117,9 +103,6 @@ const imageStyle = {
   return (
     <>
         <Grid container spacing={3}>
-            {/* <Grid item xs={12}>
-              <Paper className={"a"}>xs=12</Paper>
-            </Grid> */}
             <Grid item xs={4} md={4} lg={4}>
               <GaugeChart id="gauge-chart2"
                 nrOfLevels={20} 
@@ -128,7 +111,7 @@ const imageStyle = {
                 percent={runningJobsPerc} 
                 style={chartStyle}
               />
-              <Typography align="center">Succeful Jobs</Typography>
+              <Typography align="center">Successful Jobs</Typography>
             </Grid>
             <Grid item xs={4} md={4} lg={4}>
               <GaugeChart id="gauge-chart2" 
