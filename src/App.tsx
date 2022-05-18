@@ -39,9 +39,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <Typography variant="h1" align="center">AliMonitor</Typography>
       <RecursiveTreeView menuOpened={menuOpened} setMenuOpened={setMenuOpened} ></RecursiveTreeView>
-      <Form forceUpdate={forceUpdate} setTabIndex={setTabIndex}></Form>
+      <Form menuOpened={menuOpened} forceUpdate={forceUpdate} setTabIndex={setTabIndex}></Form>
       <FullWidthTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex}></FullWidthTabs>
-    
     </ThemeProvider>
   );
 

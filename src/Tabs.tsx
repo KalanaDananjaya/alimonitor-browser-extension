@@ -6,7 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Base from './Base';
+import Guages from './Guages';
 import Config from './Config'
 
 interface TabPanelProps {
@@ -30,7 +30,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 12 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -46,24 +46,37 @@ function a11yProps(index: number) {
 
 function FullWidthTabs(props) {
   const theme = useTheme();
+  
+  const mainStyle = (menuOpened) => {
+    if (menuOpened) {
+        return ({
+            opacity: 0.25,
+            zindex: 0
+        })
+    } else {
+        return ({opacity: 100})
+    }
+  }
 
-  // let gridTabIndex = 0;
-  // let siteTabIndex = 1;
-  // if (localStorage.getItem(Config.siteList) !== null){
-  //   gridTabIndex = 1;
-  //   siteTabIndex = 0;
-  // }
+  const storedTabIndex = localStorage.getItem(Config.tabIndex);
+
+  if(storedTabIndex === "1") {
+  console.log('storassssssssssssssssed tab index is',storedTabIndex)
+  props.setTabIndex(1)
+}
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log("or i ti should handle thi")
     props.setTabIndex(newValue);
   };
 
   const handleChangeIndex = (index: number) => {
+    console.log("ti should handle thi")
     props.setTabIndex(index);
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.paper' }}>
+    <Box sx={{ bgcolor: 'background.paper'}} style={mainStyle(props.menuOpened)}>
       <AppBar position="static">
         <Tabs
           value={props.tabIndex}
@@ -83,10 +96,10 @@ function FullWidthTabs(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
-            <Base menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}></Base>
+            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-            <Base menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate}></Base>
+            <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate}></Guages>
         </TabPanel>
       </SwipeableViews>
     </Box>
