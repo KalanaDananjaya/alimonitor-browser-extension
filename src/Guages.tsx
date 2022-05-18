@@ -1,94 +1,76 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import GaugeChart from 'react-gauge-chart';
 import axios from 'axios';
 import { Button, Grid, ThemeProvider, Paper, Box, Typography } from '@material-ui/core'
 import alert from './images/alert.png'
+import Config from './Config'
 
-function Guage()  {
+function Guage(props)  {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [runningJobsPerc, setRunningJobsPerc] = useState(0);
+  const [gridData, setGridData] = useState({
+       activeJobs: 0,
+       maxActiveJobs: 1,
+       gridActiveJobs: 0,
+       gridMaxActiveJobs: 1,
+       sesTotalSize: 1,
+       sesUsedSpace: 0,
+       gridTotalSize: 1,
+       gridUsedSpace: 0,
+       siteIssues: [],
+       csIssues: []
+  })
+  const [gridRunningJobsPerc, setGridRunningJobsPerc] = useState(0);
+  const [gridStorageLeftPerc, setGridStorageLeftPerc] = useState(0);
+  const [gridAlerts, setGridAlerts] = useState(0)
+  const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
+  const [siteStorageLeftPerc, setSiteStorageLeftPerc] = useState(0);
+  const [siteAlerts, setSiteAlerts] = useState(0)
   const [error, setError] = useState(null);
-  const [seDetails, setSEdetails] = useState([]);
-  const [storageLeftPerc, setStorageLeftPerc] = useState(0);
 
-// console.log('usedGBs', usedGBs)
-    let prefix = "http://alimonitor.cern.ch/";
-    // prefix = "";
-
-  const updateJobDetails = () => {
-    let maxActiveJobs = 0;
-    let runningJobs = 0
+  const updateGridData = () => {
+    console.log('triggered')
     axios
-    .get(prefix + "numbers.jsp?series=runningjobs")
-    .then(function (response) {
-      setIsLoaded(true);
-      runningJobs = response.data;
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-
-    axios
-        .get(prefix + "numbers.jsp?series=maxactive")
-        .then(function (response) {
+      .get(Config.baseUrl + "plugin/pluginData.jsp?filter=" + localStorage.getItem(Config.siteList))
+      .then(function (response) {
+        console.log('plugin data', response.data)
+        let gridStatusData = response.data
+        let gridStatusDataObj = {
+          activeJobs: gridStatusData.activeJobs,
+          maxActiveJobs: gridStatusData.maxActiveJobs,
+          gridActiveJobs: gridStatusData.gridActiveJobs,
+          gridMaxActiveJobs: gridStatusData.gridMaxActiveJobs,
+          sesTotalSize: gridStatusData.sesTotalSize,
+          sesUsedSpace: gridStatusData.sesUsedSpace,
+          gridTotalSize: gridStatusData.gridTotalSize,
+          gridUsedSpace: gridStatusData.gridUsedSpace,
+          siteIssues: gridStatusData.siteIssues,
+          csIssues: gridStatusData.csIssues
+        }
+        setGridData(gridStatusDataObj)
+        console.log(gridStatusDataObj, gridData)
+        console.log(gridData.gridActiveJobs,gridData.gridMaxActiveJobs)
+        console.log((gridData.gridUsedSpace,gridData.gridTotalSize))
+        
+        setGridRunningJobsPerc(gridStatusDataObj.gridActiveJobs/gridStatusDataObj.gridMaxActiveJobs);
+        setGridStorageLeftPerc(gridStatusDataObj.gridUsedSpace/gridStatusDataObj.gridTotalSize);
+        setGridAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
+        setSiteRunningJobsPerc(gridStatusDataObj.activeJobs/gridStatusDataObj.maxActiveJobs);
+        setSiteStorageLeftPerc(gridStatusDataObj.sesUsedSpace/gridStatusDataObj.sesTotalSize);
+        setSiteAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
         setIsLoaded(true);
-        maxActiveJobs = response.data;
-        const runningJobsPerc = runningJobs/maxActiveJobs;
-        setRunningJobsPerc(runningJobsPerc);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
-
-const updateSEdetails = () => {
-    axios
-    .get(prefix + "rest/_TOTALS_/Site_SE_Status/*CERN*/used_gb%7cavail_gb?Accept=application/json")
-    .then(function (response) {
-      setIsLoaded(true);
-      const seDetails = response.data.results;
-      setSEdetails(seDetails);
-      console.log('seDetals', seDetails);
-
-      let usedGBs = 0;
-      let availGBs = 0;
-
-      const groupedSEbyName = groupBy(seDetails, "Node");
-      const groupeSEbyParams = groupBy(seDetails, "Parameter");
-
-      groupeSEbyParams.used_gb.forEach((se) => {
-        usedGBs = usedGBs + Math.max(0,parseFloat(se.Value));
-      });
-      groupeSEbyParams.avail_gb.forEach((se) => {
-        console.log( "value", se.Value)
-        availGBs = availGBs + Math.max(0,parseFloat(se.Value));
-      });
-      setStorageLeftPerc((availGBs/(usedGBs+availGBs)))
-    })
-    .catch(function (error) {
+      })
+      .catch(function (error) {
+        setError(error)
         console.log(error);
-    });
-}
+      });
+  }
 
-  // Accepts the array and key
-  const groupBy = (array, key) => {
-    // Return the end result
-    return array.reduce((result, currentValue) => {
-      // If an array already present for key, push it to the array. Else create an array and push the object
-      (result[currentValue[key]] = result[currentValue[key]] || []).push(
-        currentValue
-      );
-      // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-      return result;
-    }, {}); // empty object is the initial value for result object
-  };
 
 useEffect(() => {
 
-    updateJobDetails();
-    updateSEdetails();
-  }, []);
+  updateGridData();
+  }, [localStorage.getItem(Config.siteList)]);
 
 const chartStyle = {
     height: '50%'
@@ -100,36 +82,76 @@ const imageStyle = {
     height: '30%'
 }
 
-  return (
-    <>
-        <Grid container spacing={3}>
-            <Grid item xs={4} md={4} lg={4}>
-              <GaugeChart id="gauge-chart2"
-                nrOfLevels={20} 
-                colors={["#FF0000", "#33FF4C"]} 
-                textColor="#464A4F"
-                percent={runningJobsPerc} 
-                style={chartStyle}
-              />
-              <Typography align="center">Successful Jobs</Typography>
-            </Grid>
-            <Grid item xs={4} md={4} lg={4}>
-              <GaugeChart id="gauge-chart2" 
-                nrOfLevels={20} 
-                colors={["#33FF4C", "#FF0000"]} 
-                textColor="#464A4F"
-                percent={storageLeftPerc} 
-                style={chartStyle}
-              />
-              <Typography align="center">Storage left</Typography>
-            </Grid>
-            <Grid item xs={4} md={4} lg={4}>
-                <img src={alert} alt="alert" style={imageStyle} />
-                <Typography align="center">x Alerts</Typography>
-            </Grid>
-        </Grid>
-    </>
-  )
+  if (props.type ==="Grid") {
+    return (
+      <>
+          <Grid container spacing={3}>
+              <Grid item xs={4} md={4} lg={4}>
+                <GaugeChart id="gauge-chart2"
+                  nrOfLevels={20} 
+                  colors={["#FF0000", "#33FF4C"]} 
+                  textColor="#464A4F"
+                  percent={gridRunningJobsPerc} 
+                  style={chartStyle}
+                />
+                <Typography align="center">Successful Jobs</Typography>
+                <Typography align="center">Active Jobs :  {gridData.gridActiveJobs}</Typography>
+              </Grid>
+              <Grid item xs={4} md={4} lg={4}>
+                <GaugeChart id="gauge-chart2" 
+                  nrOfLevels={20} 
+                  colors={["#33FF4C", "#FF0000"]} 
+                  textColor="#464A4F"
+                  percent={gridStorageLeftPerc} 
+                  style={chartStyle}
+                />
+                <Typography align="center">Storage left</Typography>
+                <Typography align="center">Storage left :  {(gridData.gridUsedSpace/10000000000000).toFixed(2)}? </Typography>
+              </Grid>
+              <Grid item xs={4} md={4} lg={4}>
+                  <img src={alert} alt="alert" style={imageStyle} />
+                  <Typography align="center">{gridAlerts} Alerts</Typography>
+              </Grid>
+          </Grid>
+      </>
+    )
+  } else if(props.type === "Site") {
+    return (
+      <>
+          <Grid container spacing={3}>
+              <Grid item xs={4} md={4} lg={4}>
+                <GaugeChart id="gauge-chart2"
+                  nrOfLevels={20} 
+                  colors={["#FF0000", "#33FF4C"]} 
+                  textColor="#464A4F"
+                  percent={siteRunningJobsPerc} 
+                  style={chartStyle}
+                />
+                <Typography align="center">Successful Jobs</Typography>
+                <Typography align="center">Active Jobs :  {gridData.activeJobs}</Typography>
+              </Grid>
+              <Grid item xs={4} md={4} lg={4}>
+                <GaugeChart id="gauge-chart2" 
+                  nrOfLevels={20} 
+                  colors={["#33FF4C", "#FF0000"]} 
+                  textColor="#464A4F"
+                  percent={siteStorageLeftPerc} 
+                  style={chartStyle}
+                />
+                <Typography align="center">Storage Used</Typography>
+                <Typography align="center">Storage Used :  {(gridData.sesUsedSpace/10000000000000).toFixed(2)}? </Typography>
+              </Grid>
+              <Grid item xs={4} md={4} lg={4}>
+                  <img src={alert} alt="alert" style={imageStyle} />
+                  <Typography align="center">{gridAlerts} Alerts</Typography>
+              </Grid>
+          </Grid>
+      </>
+    )
+  } else {
+    return (<></>)
+  }
+  
 };
 
 export default Guage;

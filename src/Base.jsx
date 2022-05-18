@@ -33,9 +33,9 @@ function Base (props) {
             <div className="main" style={mainStyle(props.menuOpened)}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                    <Guage></Guage>
+                    <Guage siteList={props.siteList} type={props.type} forceUpdate={props.forceUpdate}></Guage>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                     <Paper className={classes.paper}>xs=6</Paper>
                     </Grid>
                     <Grid item xs={6}>
@@ -52,7 +52,7 @@ function Base (props) {
                     </Grid>
                     <Grid item xs={3}>
                     <Paper className={classes.paper}>xs=3</Paper>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
     )

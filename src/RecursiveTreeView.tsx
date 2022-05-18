@@ -4,13 +4,21 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { useState, useEffect } from 'react';
-import JsonMenu from './menu.json';
-import { Typography } from '@material-ui/core';
+import Config from './Config'
+import axios from 'axios';
 
 
 function RecursiveTreeView(props) {
 
-const [menuItems, setMenuItems] = useState(JsonMenu);
+const [menuItems, setMenuItems] = useState({
+	"id" : 0,
+	"name" : "ALICE Repository",
+	"prefix" : "//alimonitor.cern.ch",
+	"url" : null,
+	"children" : []
+});
+
+const [isLoaded, setIsLoaded] = useState(false);
 const menuItemUrls = {}
 
 const useStyles = makeStyles({
@@ -23,6 +31,17 @@ const useStyles = makeStyles({
     },
 });
 
+const getMenuData = () => {
+    axios
+        .get(Config.baseUrl + "menu.json")
+        .then(function (response) {
+            setIsLoaded(true);
+            setMenuItems(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 
 const populateMenu = (menuItem) => {
@@ -53,12 +72,10 @@ const populateMenu = (menuItem) => {
     }
 }
 useEffect(() => {
-
+    getMenuData()
     populateMenu(menuItems)
     setMenuItems(menuItems)
   }, []);
-
-
 
 
 const checkMenuExpanded = (nodeId) => {
@@ -70,7 +87,6 @@ const checkMenuExpanded = (nodeId) => {
 
 const handleTreeItemClick = (event, nodeId) => {
     checkMenuExpanded(nodeId);
-    console.log('clicked nodeId is', nodeId, menuItemUrls[nodeId], "-")
     
     var url = menuItemUrls[nodeId];
     if (url === null || url ==='' || url === undefined) {

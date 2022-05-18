@@ -2,6 +2,7 @@
   "name": "alimonitor-extension",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://alimonitor.cern.ch/",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -26,6 +27,7 @@
     "react-gauge-chart": "^0.4.0",
     "react-scripts": "4.0.3",
     "react-simple-tree-menu": "^1.1.18",
+    "react-swipeable-views": "^0.14.0",
     "typescript": "^4.6.4",
     "web-vitals": "^1.1.2"
   },
