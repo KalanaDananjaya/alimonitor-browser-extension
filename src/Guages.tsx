@@ -5,17 +5,33 @@ import axios from 'axios';
 import { Button, Grid, ThemeProvider, Paper, Box, Typography } from '@material-ui/core'
 import alert from './images/alert.png'
 import Config from './Config'
+import { makeStyles } from "@material-ui/core/styles";
 
 function Guage(props) {
-  // const [isLoaded, setIsLoaded] = useState(false);
+
+  const useStyles = makeStyles(() => ({
+    item:{
+      cursor: "pointer",
+      '&:hover':{
+        '&>a':{
+          color:'green',
+          
+        }
+      }
+    }
+  }));
+
+  const classes = useStyles();
+
+  const [isLoaded, setIsLoaded] = useState(false);
   const [gridData, setGridData] = useState({
     activeJobs: 0,
-    maxActiveJobs: 1,
+    maxActiveJobs: 0,
     gridActiveJobs: 0,
-    gridMaxActiveJobs: 1,
-    sesTotalSize: 1,
+    gridMaxActiveJobs: 0,
+    sesTotalSize: 0,
     sesUsedSpace: 0,
-    gridTotalSize: 1,
+    gridTotalSize: 0,
     gridUsedSpace: 0,
     siteIssues: [],
     csIssues: []
@@ -25,27 +41,23 @@ function Guage(props) {
   const [gridAlerts, setGridAlerts] = useState(0)
   const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
   const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
-  const [siteAlerts, setSiteAlerts] = useState(0)
+  const [siteAlerts, setSiteAlerts] = useState(0);
+  const [siteSeUrlLink, setSiteSeUrl] = useState("http://alimonitor.cern.ch/stats?page=SE/table");
   const [error, setError] = useState(null);
+  let siteSeUrl = "http://alimonitor.cern.ch/stats?page=SE/table";
 
   const updateGridData = () => {
-    let siteList = localStorage.getItem(Config.siteList) === null ? "" : localStorage.getItem(Config.siteList)
+    const storedSiteList = localStorage.getItem(Config.siteList)
+    let siteList =  "" 
+    if (storedSiteList !== null) {
+      siteList = storedSiteList
+      siteSeUrl = "http://alimonitor.cern.ch/stats?filter_0_0="+ encodeURIComponent(siteList) + "&page=SE%2Ftable"
+      setSiteSeUrl(siteSeUrl)
+    }
     axios
       .get(Config.baseUrl + "pluginData.jsp?filter=" + siteList)
-      .then(function (response) {
+      .then( (response) => {
         let gridStatusData = response.data
-        if (gridStatusData.sesTotalSize == 0) {
-          gridStatusData.sesTotalSize = 1
-        } 
-        if (gridStatusData.gridTotalSize == 0) {
-          gridStatusData.gridTotalSize = 1
-        }
-        if (gridStatusData.gridMaxActiveJobs == 0) {
-          gridStatusData.gridMaxActiveJobs = 1
-        }
-        if (gridStatusData.maxActiveJobs == 0) {
-          gridStatusData.maxActiveJobs = 1
-        }
         let gridStatusDataObj = {
           activeJobs: gridStatusData.activeJobs,
           maxActiveJobs: gridStatusData.maxActiveJobs,
@@ -59,9 +71,6 @@ function Guage(props) {
           csIssues: gridStatusData.csIssues
         }
         setGridData(gridStatusDataObj)
-        console.log(gridStatusDataObj, gridData)
-        console.log(gridData.activeJobs, gridData.maxActiveJobs)
-        console.log((gridData.gridUsedSpace, gridData.gridTotalSize))
 
         // Whole Grid data
         setGridRunningJobsPerc(gridStatusDataObj.gridActiveJobs / gridStatusDataObj.gridMaxActiveJobs);
@@ -78,8 +87,10 @@ function Guage(props) {
           siteIssues: gridStatusDataObj.siteIssues,
           csIssues: gridStatusDataObj.csIssues
         })
+        
+        
 
-        // setIsLoaded(true);
+        setIsLoaded(true);
       })
       .catch(function (error) {
         setError(error)
@@ -88,12 +99,11 @@ function Guage(props) {
   }
 
   const handleClick = (tab, column, url) => {
-    console.log(tab, column, url)
+    window.open(url, "_blank")
   }
 
 
   useEffect(() => {
-
     updateGridData();
   }, [localStorage.getItem(Config.siteList)]);
 
@@ -122,28 +132,29 @@ function Guage(props) {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
         <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={4}  onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
               textColor="#464A4F"
-              percent={gridRunningJobsPerc}
+              percent={gridRunningJobsPerc === NaN ? 0 : gridRunningJobsPerc}
               style={chartStyle}
+              
             />
             <Typography align="center">Active Jobs :  {gridData.gridActiveJobs}</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
-              percent={gridStorageUsedPerc}
+              percent={gridStorageUsedPerc === NaN ? 0 : gridStorageUsedPerc}
               style={chartStyle}
             />
             <Typography align="center">Storage Used  :  {(gridData.gridUsedSpace).toFixed(2)} PB </Typography>
             <Typography align="center">Total Storage :  {(gridData.gridTotalSize).toFixed(2)} PB </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
             <img src={alert} alt="alert" style={imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>
@@ -154,28 +165,28 @@ function Guage(props) {
     return (
       <div className="main" style={mainStyle(props.menuOpened)}>
         <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "jobs", "")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
               textColor="#464A4F"
-              percent={siteRunningJobsPerc}
+              percent={siteRunningJobsPerc === NaN ? 0 : siteRunningJobsPerc}
               style={chartStyle}
             />
             <Typography align="center">Active Jobs :  {gridData.activeJobs}</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?filter_0_0=GSI%2CCERN&page=SE%2Ftable")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", siteSeUrlLink)}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
-              percent={siteStorageUsedPerc}
+              percent={siteStorageUsedPerc === NaN ? 0 : siteStorageUsedPerc}
               style={chartStyle}
             />
             <Typography align="center">Storage Used :  {(gridData.sesUsedSpace).toFixed(2)} PB </Typography>
             <Typography align="center">Total Storage :  {(gridData.sesTotalSize ).toFixed(2)} PB </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "alerts", "")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "")}>
             <img src={alert} alt="alert" style={imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>
