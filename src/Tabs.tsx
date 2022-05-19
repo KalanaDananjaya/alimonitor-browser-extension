@@ -7,7 +7,8 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Guages from './Guages';
-import Config from './Config'
+import Form from './Form'
+import Alerts from './Alerts'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -58,20 +59,11 @@ function FullWidthTabs(props) {
     }
   }
 
-  const storedTabIndex = localStorage.getItem(Config.tabIndex);
-
-  if(storedTabIndex === "1") {
-  console.log('storassssssssssssssssed tab index is',storedTabIndex)
-  props.setTabIndex(1)
-}
-
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log("or i ti should handle thi")
     props.setTabIndex(newValue);
   };
 
   const handleChangeIndex = (index: number) => {
-    console.log("ti should handle thi")
     props.setTabIndex(index);
   };
 
@@ -86,8 +78,10 @@ function FullWidthTabs(props) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Grid" {...a11yProps(0)} />
-          <Tab label="Site" {...a11yProps(1)} />
+          <Tab label="Site" {...a11yProps(0)} />
+          <Tab label="Grid" {...a11yProps(1)} />
+          <Tab label="Alerts" {...a11yProps(2)} />
+          <Tab label="Configuration" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -96,11 +90,18 @@ function FullWidthTabs(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues}></Guages>
         </TabPanel>
+        <TabPanel value={props.tabIndex} index={2} dir={theme.direction}>
+            <Alerts issues={props.issues}></Alerts>
+        </TabPanel>
+        <TabPanel value={props.tabIndex} index={3} dir={theme.direction}>
+            <Form menuOpened={props.menuOpened} forceUpdate={props.forceUpdate} setTabIndex={props.setTabIndex}></Form>
+        </TabPanel>
+        
       </SwipeableViews>
     </Box>
   );

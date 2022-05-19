@@ -14,6 +14,10 @@ function App() {
   const [menuOpened, setMenuOpened] = useState(false);
   const [, forceUpdate] = useState(0);
   const [tabIndex, setTabIndex] = useState(0);
+  const [issues, setIssues] = useState({
+    siteIssues : [],
+    csIssues: []
+  });
 
   const theme = useMemo(
     () =>
@@ -23,12 +27,12 @@ function App() {
         },
         typography: {
           h1: {
-            fontSize: 16,
+            fontSize: 36,
             fontWeight: 400,
           },
-          body1: {
-            fontFamily: 'monospace',
+          body2: {
             fontSize: 18,
+            float: 'right'
           },
         },
       }),
@@ -37,14 +41,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography variant="h1" align="center">AliMonitor</Typography>
+      <Typography variant="h1" align="center">AliMonitor Extension</Typography>
       <RecursiveTreeView menuOpened={menuOpened} setMenuOpened={setMenuOpened} ></RecursiveTreeView>
-      <Form menuOpened={menuOpened} forceUpdate={forceUpdate} setTabIndex={setTabIndex}></Form>
-      <FullWidthTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex}></FullWidthTabs>
+      <Typography variant="body2" align="center">Sitelist : [ {localStorage.getItem(Config.siteList)} ]</Typography>
+      <FullWidthTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} issues={issues} setIssues={setIssues}></FullWidthTabs>
     </ThemeProvider>
   );
-
-  
 }
 
 export default App;

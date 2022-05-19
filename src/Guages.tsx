@@ -21,16 +21,17 @@ function Guage(props) {
     csIssues: []
   })
   const [gridRunningJobsPerc, setGridRunningJobsPerc] = useState(0);
-  const [gridStorageLeftPerc, setGridStorageLeftPerc] = useState(0);
+  const [gridStorageUsedPerc, setGridStorageUsedPerc] = useState(0);
   const [gridAlerts, setGridAlerts] = useState(0)
   const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
-  const [siteStorageLeftPerc, setSiteStorageLeftPerc] = useState(0);
+  const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
   const [siteAlerts, setSiteAlerts] = useState(0)
   const [error, setError] = useState(null);
 
   const updateGridData = () => {
+    let siteList = localStorage.getItem(Config.siteList) === null ? "" : localStorage.getItem(Config.siteList)
     axios
-      .get(Config.baseUrl + "plugin/pluginData.jsp?filter=" + localStorage.getItem(Config.siteList))
+      .get(Config.baseUrl + "pluginData.jsp?filter=" + siteList)
       .then(function (response) {
         let gridStatusData = response.data
         if (gridStatusData.sesTotalSize == 0) {
@@ -50,33 +51,44 @@ function Guage(props) {
           maxActiveJobs: gridStatusData.maxActiveJobs,
           gridActiveJobs: gridStatusData.gridActiveJobs,
           gridMaxActiveJobs: gridStatusData.gridMaxActiveJobs,
-          sesTotalSize: gridStatusData.sesTotalSize,
-          sesUsedSpace: gridStatusData.sesUsedSpace,
-          gridTotalSize: gridStatusData.gridTotalSize,
-          gridUsedSpace: gridStatusData.gridUsedSpace,
+          sesTotalSize: gridStatusData.sesTotalSize/1000000000000000,
+          sesUsedSpace: gridStatusData.sesUsedSpace/1000000000000000,
+          gridTotalSize: gridStatusData.gridTotalSize/1000000000000000,
+          gridUsedSpace: gridStatusData.gridUsedSpace/1000000000000000,
           siteIssues: gridStatusData.siteIssues,
           csIssues: gridStatusData.csIssues
         }
         setGridData(gridStatusDataObj)
-        // console.log(gridStatusDataObj, gridData)
-        // console.log(gridData.gridActiveJobs, gridData.gridMaxActiveJobs)
-        // console.log((gridData.gridUsedSpace, gridData.gridTotalSize))
+        console.log(gridStatusDataObj, gridData)
+        console.log(gridData.activeJobs, gridData.maxActiveJobs)
+        console.log((gridData.gridUsedSpace, gridData.gridTotalSize))
 
         // Whole Grid data
         setGridRunningJobsPerc(gridStatusDataObj.gridActiveJobs / gridStatusDataObj.gridMaxActiveJobs);
-        setGridStorageLeftPerc(gridStatusDataObj.gridUsedSpace / gridStatusDataObj.gridTotalSize);
+        setGridStorageUsedPerc(gridStatusDataObj.gridUsedSpace / gridStatusDataObj.gridTotalSize);
         setGridAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
 
         // Site specific data
         setSiteRunningJobsPerc(gridStatusDataObj.activeJobs / gridStatusDataObj.maxActiveJobs);
-        setSiteStorageLeftPerc(gridStatusDataObj.sesUsedSpace / gridStatusDataObj.sesTotalSize);
+        setSiteStorageUsedPerc(gridStatusDataObj.sesUsedSpace / gridStatusDataObj.sesTotalSize);
         setSiteAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
+        
+        // Alerts
+        props.setIssues({
+          siteIssues: gridStatusDataObj.siteIssues,
+          csIssues: gridStatusDataObj.csIssues
+        })
+
         // setIsLoaded(true);
       })
       .catch(function (error) {
         setError(error)
         console.log(error);
       });
+  }
+
+  const handleClick = (tab, column, url) => {
+    console.log(tab, column, url)
   }
 
 
@@ -110,7 +122,7 @@ function Guage(props) {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
         <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4}  onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
@@ -118,21 +130,20 @@ function Guage(props) {
               percent={gridRunningJobsPerc}
               style={chartStyle}
             />
-            <Typography align="center">Successful Jobs</Typography>
             <Typography align="center">Active Jobs :  {gridData.gridActiveJobs}</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
-              percent={gridStorageLeftPerc}
+              percent={gridStorageUsedPerc}
               style={chartStyle}
             />
-            <Typography align="center">Storage left</Typography>
-            <Typography align="center">Storage left :  {(gridData.gridUsedSpace / 10000000000000).toFixed(2)}? </Typography>
+            <Typography align="center">Storage Used  :  {(gridData.gridUsedSpace).toFixed(2)} PB </Typography>
+            <Typography align="center">Total Storage :  {(gridData.gridTotalSize).toFixed(2)} PB </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
             <img src={alert} alt="alert" style={imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>
@@ -143,7 +154,7 @@ function Guage(props) {
     return (
       <div className="main" style={mainStyle(props.menuOpened)}>
         <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "jobs", "")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
@@ -151,21 +162,20 @@ function Guage(props) {
               percent={siteRunningJobsPerc}
               style={chartStyle}
             />
-            <Typography align="center">Successful Jobs</Typography>
             <Typography align="center">Active Jobs :  {gridData.activeJobs}</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?filter_0_0=GSI%2CCERN&page=SE%2Ftable")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
-              percent={siteStorageLeftPerc}
+              percent={siteStorageUsedPerc}
               style={chartStyle}
             />
-            <Typography align="center">Storage Used</Typography>
-            <Typography align="center">Storage Used :  {(gridData.sesUsedSpace / 10000000000000).toFixed(2)}? </Typography>
+            <Typography align="center">Storage Used :  {(gridData.sesUsedSpace).toFixed(2)} PB </Typography>
+            <Typography align="center">Total Storage :  {(gridData.sesTotalSize ).toFixed(2)} PB </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4}>
+          <Grid item xs={4} md={4} lg={4} onClick={() => handleClick(props.type, "alerts", "")}>
             <img src={alert} alt="alert" style={imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>

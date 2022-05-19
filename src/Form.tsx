@@ -20,9 +20,9 @@ function Form(props) {
       fontSize: 20
     },
     root: {
-      padding: theme.spacing(3, 2)
-    },
-    container: {
+      padding: theme.spacing(3, 2),
+      margin: "auto",
+      justifyContent: "center",
       display: "flex",
       flexWrap: "wrap"
     },
@@ -47,8 +47,7 @@ function Form(props) {
   const handleSubmit = evt => {
     evt.preventDefault()
     localStorage.setItem(Config.siteList, formInput.sites)
-    localStorage.setItem(Config.tabIndex, "1")
-    // props.setTabIndex(1)
+    props.setTabIndex(0)
     props.forceUpdate(n => !n)
   };
 
@@ -60,7 +59,6 @@ function Form(props) {
 
   const clear = () => {
       localStorage.removeItem(Config.siteList);
-      localStorage.removeItem(Config.tabIndex);
       setFormInput({ sites: "" });
       props.setTabIndex(0)
     }

@@ -23,11 +23,11 @@ const menuItemUrls = {}
 
 const useStyles = makeStyles({
     root: {
-        height: 110,
         flexGrow: 1,
         maxWidth: 400,
         zIndex:1000,
-        position: 'relative'
+        position: 'relative',
+        float: 'left'
     },
 });
 
