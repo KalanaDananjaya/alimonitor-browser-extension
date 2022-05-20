@@ -50,9 +50,6 @@ function App() {
     [prefersDarkMode]
   );
 
-  
-    
-
   return (
     <ThemeProvider theme={theme}>
       <div style={{padding: '1%'}}>

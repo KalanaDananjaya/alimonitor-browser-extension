@@ -24,7 +24,8 @@ function Form(props) {
       margin: "auto",
       justifyContent: "center",
       display: "flex",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      width: "500px"
     },
     textField: {
       marginLeft: theme.spacing(1),
