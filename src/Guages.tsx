@@ -47,9 +47,8 @@ function Guage(props) {
   const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
   const [siteAlerts, setSiteAlerts] = useState(0);
   const [alertImage, setAlertImage] = useState(AlertGreen)
-  const [siteSeUrlLink, setSiteSeUrl] = useState("http://alimonitor.cern.ch/stats?page=SE/table");
+  const [siteSeUrl, setSiteSeUrl] = useState("");
   const [error, setError] = useState(null);
-  let siteSeUrl = "http://alimonitor.cern.ch/stats?page=SE/table";
   let alertColor = "green"
   
 
@@ -58,8 +57,9 @@ function Guage(props) {
     let siteList =  "" 
     if (storedSiteList !== null) {
       siteList = storedSiteList
-      siteSeUrl = "http://alimonitor.cern.ch/stats?filter_0_0="+ encodeURIComponent(siteList) + "&page=SE%2Ftable"
-      setSiteSeUrl(siteSeUrl)
+      setSiteSeUrl("http://alimonitor.cern.ch/stats?filter_0_0="+ encodeURIComponent(siteList) + "&page=SE%2Ftable")
+    } else {
+      setSiteSeUrl("http://alimonitor.cern.ch/stats?page=SE/table")
     }
     axios
       .get(Config.baseUrl + "/plugin/pluginData.jsp?filter=" + siteList)
@@ -184,7 +184,7 @@ function Guage(props) {
             />
             <Typography align="center">Active Jobs :  {gridData.activeJobs}</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", siteSeUrlLink)}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", siteSeUrl)}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#33FF4C", "#FF0000"]}

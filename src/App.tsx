@@ -2,8 +2,8 @@ import { ThemeProvider, Typography } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useMemo, useState } from 'react';
-import RecursiveTreeView from './RecursiveTreeView';
-import FullWidthTabs from './Tabs';
+import Menu from './Menu';
+import NavTabs from './NavTabs';
 import Config from './Config';
 
 function App() {
@@ -24,7 +24,6 @@ function App() {
   }
 
   const changeIcon = (color) => {
-    console.log("change icon function called with color", color)
     browser.browserAction.setIcon({
       path: "./images/alert-" + color + ".png"
     })
@@ -54,9 +53,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <div style={{padding: '1%'}}>
         <Typography variant="h1" align="center">AliMonitor Extension</Typography>
-        <RecursiveTreeView menuOpened={menuOpened} setMenuOpened={setMenuOpened} ></RecursiveTreeView>
+        <Menu menuOpened={menuOpened} setMenuOpened={setMenuOpened} createTab={createTab}></Menu>
         <Typography variant="body2" align="center">Sitelist : [ {localStorage.getItem(Config.siteList)} ]</Typography>
-        <FullWidthTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} issues={issues} setIssues={setIssues} createTab={createTab} changeIcon={changeIcon}></FullWidthTabs>
+        <NavTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} issues={issues} setIssues={setIssues} createTab={createTab} changeIcon={changeIcon}></NavTabs>
       </div>
     </ThemeProvider>
   );

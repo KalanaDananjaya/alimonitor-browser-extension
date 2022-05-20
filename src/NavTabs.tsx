@@ -45,7 +45,7 @@ function a11yProps(index: number) {
   };
 }
 
-function FullWidthTabs(props) {
+function NavTabs(props) {
   const theme = useTheme();
   
   const mainStyle = (menuOpened) => {
@@ -107,4 +107,4 @@ function FullWidthTabs(props) {
   );
 }
 
-export default FullWidthTabs;
+export default NavTabs;

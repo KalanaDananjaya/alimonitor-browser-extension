@@ -2,7 +2,7 @@
   "name": "alimonitor-extension",
   "version": "0.0.1",
   "private": true,
-  "proxy": "http://alimonitor.cern.ch/",
+  "author": {"name": "Kalana Wijethunga"},
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
