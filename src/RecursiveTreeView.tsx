@@ -91,15 +91,14 @@ const handleTreeItemClick = (event, nodeId) => {
     var url = menuItemUrls[nodeId];
     if (url === null || url ==='' || url === undefined) {
         // do nothing
-        // chrome.tabs.create({ url: newURL });
     } 
     // If the url starts with http, do not add the prefix
     else if (/^(http)/.test(url)){
         // chrome.tabs.create({ url: newURL });
-        window.open(url, "_blank");
+        props.createTab(url)
     } else {
         // chrome.tabs.create({ url: newURL });
-        window.open(menuItems.prefix + url, "_blank");
+        props.createTab(menuItems.prefix + url)
     }
   
 }

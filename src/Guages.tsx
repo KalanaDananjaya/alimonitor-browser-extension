@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
 import GaugeChart from 'react-gauge-chart';
 import axios from 'axios';
-import { Button, Grid, ThemeProvider, Paper, Box, Typography } from '@material-ui/core'
-import alert from './images/alert.png'
+import { Grid, Typography } from '@material-ui/core'
+import AlertGreen from './images/alert-green.png'
+import AlertRed from './images/alert-red.png'
 import Config from './Config'
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -12,12 +12,14 @@ function Guage(props) {
   const useStyles = makeStyles(() => ({
     item:{
       cursor: "pointer",
-      '&:hover':{
-        '&>a':{
-          color:'green',
-          
-        }
-      }
+    },
+    chartStyle : {
+      // height: '50%'
+    },
+    imageStyle : {
+      display: 'block',
+      margin: 'auto',
+      height: '30%'
     }
   }));
 
@@ -42,9 +44,12 @@ function Guage(props) {
   const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
   const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
   const [siteAlerts, setSiteAlerts] = useState(0);
+  const [alertImage, setAlertImage] = useState(AlertGreen)
   const [siteSeUrlLink, setSiteSeUrl] = useState("http://alimonitor.cern.ch/stats?page=SE/table");
   const [error, setError] = useState(null);
   let siteSeUrl = "http://alimonitor.cern.ch/stats?page=SE/table";
+  let alertColor = "green"
+  
 
   const updateGridData = () => {
     const storedSiteList = localStorage.getItem(Config.siteList)
@@ -55,7 +60,7 @@ function Guage(props) {
       setSiteSeUrl(siteSeUrl)
     }
     axios
-      .get(Config.baseUrl + "pluginData.jsp?filter=" + siteList)
+      .get(Config.baseUrl + "/plugin/pluginData.jsp?filter=" + siteList)
       .then( (response) => {
         let gridStatusData = response.data
         let gridStatusDataObj = {
@@ -78,9 +83,18 @@ function Guage(props) {
         setGridAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
 
         // Site specific data
+        let siteAlertCount = gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length
         setSiteRunningJobsPerc(gridStatusDataObj.activeJobs / gridStatusDataObj.maxActiveJobs);
         setSiteStorageUsedPerc(gridStatusDataObj.sesUsedSpace / gridStatusDataObj.sesTotalSize);
-        setSiteAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
+        setSiteAlerts(siteAlertCount);
+
+        if (parseInt(siteAlertCount) === 0){
+          alertColor = "green"
+        } else {
+          setAlertImage(AlertRed)
+          alertColor = "red"
+        }
+        props.changeIcon(alertColor)
         
         // Alerts
         props.setIssues({
@@ -88,8 +102,6 @@ function Guage(props) {
           csIssues: gridStatusDataObj.csIssues
         })
         
-        
-
         setIsLoaded(true);
       })
       .catch(function (error) {
@@ -99,7 +111,7 @@ function Guage(props) {
   }
 
   const handleClick = (tab, column, url) => {
-    window.open(url, "_blank")
+    props.createTab(url)
   }
 
 
@@ -107,15 +119,7 @@ function Guage(props) {
     updateGridData();
   }, [localStorage.getItem(Config.siteList)]);
 
-  const chartStyle = {
-    height: '50%'
-  }
 
-  const imageStyle = {
-    display: 'block',
-    margin: 'auto',
-    height: '30%'
-  }
 
   const mainStyle = (menuOpened) => {
     if (menuOpened) {
@@ -138,7 +142,7 @@ function Guage(props) {
               colors={["#FF0000", "#33FF4C"]}
               textColor="#464A4F"
               percent={gridRunningJobsPerc === NaN ? 0 : gridRunningJobsPerc}
-              style={chartStyle}
+              className={classes.chartStyle}
               
             />
             <Typography align="center">Active Jobs :  {gridData.gridActiveJobs}</Typography>
@@ -149,13 +153,13 @@ function Guage(props) {
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
               percent={gridStorageUsedPerc === NaN ? 0 : gridStorageUsedPerc}
-              style={chartStyle}
+              className={classes.chartStyle}
             />
             <Typography align="center">Storage Used  :  {(gridData.gridUsedSpace).toFixed(2)} PB </Typography>
             <Typography align="center">Total Storage :  {(gridData.gridTotalSize).toFixed(2)} PB </Typography>
           </Grid>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
-            <img src={alert} alt="alert" style={imageStyle} />
+            <img src={alertImage} alt="alert" className={classes.imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>
         </Grid>
@@ -171,7 +175,7 @@ function Guage(props) {
               colors={["#FF0000", "#33FF4C"]}
               textColor="#464A4F"
               percent={siteRunningJobsPerc === NaN ? 0 : siteRunningJobsPerc}
-              style={chartStyle}
+              className={classes.chartStyle}
             />
             <Typography align="center">Active Jobs :  {gridData.activeJobs}</Typography>
           </Grid>
@@ -181,13 +185,13 @@ function Guage(props) {
               colors={["#33FF4C", "#FF0000"]}
               textColor="#464A4F"
               percent={siteStorageUsedPerc === NaN ? 0 : siteStorageUsedPerc}
-              style={chartStyle}
+              className={classes.chartStyle}
             />
             <Typography align="center">Storage Used :  {(gridData.sesUsedSpace).toFixed(2)} PB </Typography>
             <Typography align="center">Total Storage :  {(gridData.sesTotalSize ).toFixed(2)} PB </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "")}>
-            <img src={alert} alt="alert" style={imageStyle} />
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
+            <img src={alertImage} alt="alert" className={classes.imageStyle} />
             <Typography align="center">{gridAlerts} Alerts</Typography>
           </Grid>
         </Grid>

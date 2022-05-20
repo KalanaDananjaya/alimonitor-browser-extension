@@ -55,8 +55,8 @@ function Alerts (props) {
         
     });
 
-    const handleClick = (link) => {
-        window.open(link,"_blank")
+    const handleClick = (url) => {
+        props.createTab(url)
     }
 
     return (

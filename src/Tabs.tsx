@@ -90,13 +90,13 @@ function FullWidthTabs(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues} createTab={props.createTab} changeIcon={props.changeIcon}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate} setIssues={props.setIssues} createTab={props.createTab} changeIcon={props.changeIcon}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={2} dir={theme.direction}>
-            <Alerts issues={props.issues}></Alerts>
+            <Alerts issues={props.issues} createTab={props.createTab}></Alerts>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={3} dir={theme.direction}>
             <Form menuOpened={props.menuOpened} forceUpdate={props.forceUpdate} setTabIndex={props.setTabIndex}></Form>

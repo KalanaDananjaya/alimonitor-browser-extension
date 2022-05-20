@@ -1,22 +1,23 @@
 {
   "name": "AliMonitor",
-  "description": "Generate universally unique identifiers fast.",
-  "version": "1.0.0",
+  "description": "AliMonitor Extension",
+  "version": "0.0.1",
   "manifest_version": 2,
-  "homepage_url": "https://github.com/zanozbot/uuid-generator",
+  "homepage_url": "https://gitlab.cern.ch/kwijethu/alimonitor-browser-extension",
   "browser_action": {
     "default_popup": "index.html",
     "default_title": "AliMonitor",
     "default_icon": {
-      "48": "logo48.png",
-      "96": "logo96.png"
+      "48": "./images/favicon.jpg",
+      "96": "./images/favicon.jpg"
     }
   },
   "icons": {
-    "48": "logo48.png",
-    "96": "logo96.png"
+    "48": "./images/favicon.jpg",
+    "96": "./images/favicon.jpg"
   },
   "permissions": [
-    "http://alimonitor.cern.ch/*"
+    "http://alimonitor.cern.ch/*",
+    "https://monit.*"
   ]
 }
