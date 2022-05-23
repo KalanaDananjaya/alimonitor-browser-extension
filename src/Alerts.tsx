@@ -23,8 +23,6 @@ interface alertProps {
     issueLink: string
 }
 
-
-
 function Alerts (props) {
     
     const alerts: alertProps[] = [];

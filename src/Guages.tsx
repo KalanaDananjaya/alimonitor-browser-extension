@@ -42,16 +42,15 @@ function Guage(props) {
   })
   const [gridRunningJobsPerc, setGridRunningJobsPerc] = useState(0);
   const [gridStorageUsedPerc, setGridStorageUsedPerc] = useState(0);
-  const [gridAlerts, setGridAlerts] = useState(0)
+  const [gridAlertsCount, setGridAlertsCount] = useState(0)
   const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
   const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
-  const [siteAlerts, setSiteAlerts] = useState(0);
+  const [siteAlertsCount, setSiteAlertsCount] = useState(0);
   const [alertImage, setAlertImage] = useState(AlertGreen)
   const [siteSeUrl, setSiteSeUrl] = useState("");
   const [error, setError] = useState(null);
   let alertColor = "green"
   
-
   const updateGridData = () => {
     const storedSiteList = localStorage.getItem(Config.siteList)
     let siteList =  "" 
@@ -75,8 +74,10 @@ function Guage(props) {
           gridTotalSize: gridStatusData.gridTotalSize/1000000000000000,
           gridUsedSpace: gridStatusData.gridUsedSpace/1000000000000000,
           siteIssues: gridStatusData.siteIssues,
-          csIssues: gridStatusData.csIssues
+          csIssues: gridStatusData.csIssues,
+          gridTotalIssues: gridStatusData.gridTotalIssues
         }
+        
         setGridData(gridStatusDataObj)
 
         // Whole Grid data
@@ -84,7 +85,7 @@ function Guage(props) {
         let gridStorageUsedLocal = gridStatusDataObj.gridUsedSpace / gridStatusDataObj.gridTotalSize
         setGridRunningJobsPerc(isNaN(gridRunningJobsPercLocal)? 0: gridRunningJobsPercLocal);
         setGridStorageUsedPerc(isNaN(gridStorageUsedLocal)? 0: gridStorageUsedLocal);
-        setGridAlerts(gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length);
+        setGridAlertsCount(gridStatusDataObj.gridTotalIssues);
 
         // Site specific data
         let siteRunningJobsPercLocal = gridStatusDataObj.activeJobs / gridStatusDataObj.maxActiveJobs
@@ -92,7 +93,7 @@ function Guage(props) {
         let siteAlertCount = gridStatusDataObj.csIssues.length + gridStatusDataObj.siteIssues.length
         setSiteRunningJobsPerc(isNaN(siteRunningJobsPercLocal)? 0: siteRunningJobsPercLocal);
         setSiteStorageUsedPerc(isNaN(siteStorageUsedLocal)? 0: siteStorageUsedLocal);
-        setSiteAlerts(siteAlertCount);
+        setSiteAlertsCount(siteAlertCount);
 
         if (parseInt(siteAlertCount) === 0){
           alertColor = "green"
@@ -101,7 +102,7 @@ function Guage(props) {
           alertColor = "red"
         }
         props.changeIcon(alertColor)
-        
+
         // Alerts
         props.setIssues({
           siteIssues: gridStatusDataObj.siteIssues,
@@ -150,7 +151,7 @@ function Guage(props) {
               percent={ gridRunningJobsPerc}
               className={classes.chartStyle}
             />
-            <Typography align="center">Active Jobs :  {gridData.gridActiveJobs}</Typography>
+            <Typography align="center">Active Jobs : {gridData.gridActiveJobs}</Typography>
           </Grid>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
             <GaugeChart id="gauge-chart2"
@@ -160,12 +161,13 @@ function Guage(props) {
               percent={gridStorageUsedPerc}
               className={classes.chartStyle}
             />
-            <Typography align="center">Storage Used  :  {(gridData.gridUsedSpace).toFixed(2)} PB </Typography>
-            <Typography align="center">Total Storage :  {(gridData.gridTotalSize).toFixed(2)} PB </Typography>
+            <Typography align="center">Disk Storage </Typography>
+            <Typography align="center">{(gridData.gridUsedSpace).toFixed(2)} PB Used</Typography>
+            <Typography align="center">{(gridData.gridTotalSize).toFixed(2)} PB Total  </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=")}>
             <img src={alertImage} alt="alert" className={classes.imageStyle} />
-            <Typography align="center">{gridAlerts} Alerts</Typography>
+            <Typography align="center">{gridAlertsCount} Alerts</Typography>
           </Grid>
         </Grid>
       </div>
@@ -192,12 +194,13 @@ function Guage(props) {
               percent={siteStorageUsedPerc}
               className={classes.chartStyle}
             />
-            <Typography align="center">Storage Used :  {(gridData.sesUsedSpace).toFixed(2)} PB </Typography>
-            <Typography align="center">Total Storage :  {(gridData.sesTotalSize ).toFixed(2)} PB </Typography>
+            <Typography align="center">Disk Storage </Typography>
+            <Typography align="center">{(gridData.sesUsedSpace).toFixed(2)} PB Used</Typography>
+            <Typography align="center">{(gridData.sesTotalSize ).toFixed(2)} PB Total</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/toolbar_annotations.jsp")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=" + localStorage.getItem(Config.siteList))}>
             <img src={alertImage} alt="alert" className={classes.imageStyle} />
-            <Typography align="center">{gridAlerts} Alerts</Typography>
+            <Typography align="center">{siteAlertsCount} Alerts</Typography>
           </Grid>
         </Grid>
       </div>

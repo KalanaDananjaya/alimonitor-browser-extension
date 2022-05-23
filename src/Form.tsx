@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import { useState } from "react";
 import { Button, Icon, TextField, Paper, Typography } from "@material-ui/core";
 import SaveIcon from '@mui/icons-material/Save';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -8,7 +8,7 @@ import Config from "./Config";
 function Form(props) {
   const useStyles = makeStyles(theme => ({
     button: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
     },
     leftIcon: {
       marginRight: theme.spacing(1)
@@ -25,7 +25,7 @@ function Form(props) {
       justifyContent: "center",
       display: "flex",
       flexWrap: "wrap",
-      width: "500px"
+      width: "600px"
     },
     textField: {
       marginLeft: theme.spacing(1),
@@ -57,10 +57,10 @@ function Form(props) {
     localStorage.setItem(Config.siteList, newValue)
   };
 
-  const clear = () => {
+  const handleClear = () => {
       localStorage.removeItem(Config.siteList);
       setFormInput({ sites: "" });
-      props.setTabIndex(0)
+      props.setTabIndex(1)
     }
 
   const classes = useStyles();
@@ -86,7 +86,7 @@ function Form(props) {
             name="sites"
             value={formInput.sites}
             className={classes.textField}
-            helperText="Enter site list"
+            helperText="Comma separated list of sites, i.e. CERN,LBL"
             onChange={handleInput}
           />
           <Button
@@ -102,7 +102,7 @@ function Form(props) {
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={clear}
+            onClick={handleClear}
           >
             Clear <ClearIcon></ClearIcon>
           </Button>

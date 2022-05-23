@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -9,6 +8,7 @@ import Box from '@mui/material/Box';
 import Guages from './Guages';
 import Form from './Form'
 import Alerts from './Alerts'
+import { useState } from "react";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -19,8 +19,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
-
+  
   return (
     <div
       role="tabpanel"
@@ -76,9 +75,9 @@ function NavTabs(props) {
           indicatorColor="secondary"
           textColor="inherit"
           variant="fullWidth"
-          aria-label="full width tabs example"
+          aria-label="full width tabs"
         >
-          <Tab label="Site" {...a11yProps(0)} />
+          <Tab label="Site" {...a11yProps(0)}/>
           <Tab label="Grid" {...a11yProps(1)} />
           <Tab label="Alerts" {...a11yProps(2)} />
           <Tab label="Configuration" {...a11yProps(3)} />

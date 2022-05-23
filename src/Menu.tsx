@@ -27,7 +27,8 @@ function Menu(props) {
             maxWidth: 400,
             zIndex:1000,
             position: 'relative',
-            float: 'left'
+            float: 'left',
+            textAlign: 'left'
         },
     });
 
@@ -78,8 +79,6 @@ function Menu(props) {
 
     useEffect(() => {
         getMenuData()
-        // populateMenu(menuItems)
-        // setMenuItems(menuItems)
     }, []);
 
 

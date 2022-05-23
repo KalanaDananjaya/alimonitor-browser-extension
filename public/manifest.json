@@ -17,7 +17,6 @@
     "96": "./images/favicon.jpg"
   },
   "permissions": [
-    "http://alimonitor.cern.ch/*",
-    "https://monit.*"
+    "http://alimonitor.cern.ch/*"
   ]
 }
