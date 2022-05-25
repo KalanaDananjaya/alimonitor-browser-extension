@@ -1,12 +1,8 @@
-# UUID Generator Firefox Add-on
+# ALICE Grid Firefox Add-on
 
-Generate universally unique identifiers fast.
+Firefox add-on for monitoring the ALICE Grid
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-<a href="https://www.buymeacoffee.com/zanozbot">
-  <img alt="Buy Me A Coffee" src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" style="height: auto !important; width: auto !important;" />
-</a>
 
 ## Available Scripts
 
@@ -27,10 +23,6 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your extension is ready to be published!
-
-## Learn More
-
-Read more about the whole process of creating and publishing your own Firefox Add-on in [my article on Medium](https://zanozbot.medium.com/how-to-create-your-own-firefox-add-on-with-react-ef34fcddb2ea).
 
 ## License
 

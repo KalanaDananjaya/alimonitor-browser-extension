@@ -8,13 +8,13 @@
     "default_popup": "index.html",
     "default_title": "AliMonitor",
     "default_icon": {
-      "48": "./images/favicon.jpg",
-      "96": "./images/favicon.jpg"
+      "48": "./images/ml2.png",
+      "96": "./images/ml2.png"
     }
   },
   "icons": {
-    "48": "./images/favicon.jpg",
-    "96": "./images/favicon.jpg"
+    "48": "./images/ml2.png",
+    "96": "./images/ml2.png"
   },
   "permissions": [
     "http://alimonitor.cern.ch/*"

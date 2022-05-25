@@ -13,6 +13,11 @@ function App() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const [menuOpened, setMenuOpened] = useState(false);
   const [, forceUpdate] = useState(0);
+  const [browserTabId, setBrowserTabId] = useState(-1);
+  const [issues, setIssues] = useState({
+    siteIssues : [],
+    csIssues: []
+  });
   const [tabIndex, setTabIndex] = useState(()=> {
     const siteList = localStorage.getItem(Config.siteList);
     if ((siteList == null) || (siteList == undefined) || (siteList == "")) {
@@ -21,15 +26,20 @@ function App() {
       return 0
     }
   });
-  const [issues, setIssues] = useState({
-    siteIssues : [],
-    csIssues: []
-  });
+  
 
   const createTab = (url) => {
-    browser.tabs.create({
-      url: url
-    });
+    // If a tab is opened by the extension, keep reusing it
+    if (browserTabId != -1) {
+      browser.tabs.update(browserTabId, {url: url});
+    } else {
+      browser.tabs.create({url: url,active: true}).then((tab) => {
+        if (tab.id !== undefined) {
+          setBrowserTabId(tab.id)
+        }
+      });
+    }
+    
   }
 
   const changeIcon = (color) => {
