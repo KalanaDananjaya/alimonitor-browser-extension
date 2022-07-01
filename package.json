@@ -2,7 +2,10 @@
   "name": "alimonitor-extension",
   "version": "0.0.1",
   "private": true,
-  "author": {"name": "Kalana Wijethunga"},
+  "author": {
+    "name": "Kalana Wijethunga"
+  },
+  "proxy": "http://alimonitor.cern.ch",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -21,14 +24,17 @@
     "@types/react": "^17.0.45",
     "@types/react-dom": "^17.0.17",
     "axios": "^0.27.2",
+    "build": "^0.1.4",
     "cors": "^2.8.5",
     "react": "^17.0.2",
     "react-bootstrap": "^2.3.1",
     "react-dom": "^17.0.2",
     "react-gauge-chart": "^0.4.0",
+    "react-minimal-pie-chart": "^8.3.0",
     "react-scripts": "4.0.3",
     "react-simple-tree-menu": "^1.1.18",
     "react-swipeable-views": "^0.14.0",
+    "run": "^1.4.0",
     "typescript": "^4.6.4",
     "web-vitals": "^1.1.2"
   },

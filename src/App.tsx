@@ -5,8 +5,8 @@ import { useMemo, useState } from 'react';
 import Menu from './Menu';
 import NavTabs from './NavTabs';
 import Config from './Config';
-import FavIcon from './images/ml2.png'
-import SiteList from './SiteList';
+import FavIcon from './images/ml2.png';
+
 
 function App() {
 
@@ -14,10 +14,7 @@ function App() {
   const [menuOpened, setMenuOpened] = useState(false);
   const [, forceUpdate] = useState(0);
   const [browserTabId, setBrowserTabId] = useState(-1);
-  const [issues, setIssues] = useState({
-    siteIssues : [],
-    csIssues: []
-  });
+
   const [tabIndex, setTabIndex] = useState(()=> {
     const siteList = localStorage.getItem(Config.siteList);
     if ((siteList == null) || (siteList == undefined) || (siteList == "")) {
@@ -39,13 +36,6 @@ function App() {
         }
       });
     }
-    
-  }
-
-  const changeIcon = (color) => {
-    browser.browserAction.setIcon({
-      path: "./images/alert-" + color + ".png"
-    })
   }
 
   const theme = useMemo(
@@ -74,8 +64,7 @@ function App() {
           <img src={FavIcon} alt="icon" style={{width:"7%", alignContent: "center", marginRight: "2%"}} />
           <Typography variant="h1" style={{display: "inline-block", verticalAlign: "top"}}>ALICE Grid</Typography>
         </div>
-        {/* <SiteList menuOpened={menuOpened}></SiteList> */}
-        <NavTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} issues={issues} setIssues={setIssues} createTab={createTab} changeIcon={changeIcon}></NavTabs>
+        <NavTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} createTab={createTab}></NavTabs>
       </div>
     </ThemeProvider>
   );
