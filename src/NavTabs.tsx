@@ -33,7 +33,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 12 }}>
+        <Box sx={{ p: 5 }}>
           <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
@@ -174,8 +174,8 @@ function NavTabs(props) {
           <Tab label="Site" {...a11yProps(0)}/>
           <Tab label="Grid" {...a11yProps(1)} />
           <Tab label="Alerts" {...a11yProps(2)} />
-          <Tab label="Composition" {...a11yProps(3)} />
-          <Tab label="Configuration" {...a11yProps(4)} />
+          <Tab label="Jobs" {...a11yProps(3)} />
+          <Tab label="Config" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -199,8 +199,6 @@ function NavTabs(props) {
         <TabPanel value={props.tabIndex} index={4} dir={theme.direction}>
             <Form menuOpened={props.menuOpened} forceUpdate={props.forceUpdate} setTabIndex={props.setTabIndex}></Form>
         </TabPanel>
-        
-        
       </SwipeableViews>
     </Box>
   );

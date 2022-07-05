@@ -58,7 +58,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{padding: "1%"}}>
+      <div style={{padding: "1%", width: '720px'}}>
         <Menu menuOpened={menuOpened} setMenuOpened={setMenuOpened} createTab={createTab}></Menu>
         <div className="Title" style={{textAlign: "center", padding: "0% 20% 0% 20%"}}>
           <img src={FavIcon} alt="icon" style={{width:"7%", alignContent: "center", marginRight: "2%"}} />
