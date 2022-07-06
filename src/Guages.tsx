@@ -1,6 +1,6 @@
 
 import GaugeChart from 'react-gauge-chart';
-import { Grid, Typography, Box } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Config from './Config'
 import AlertGreen from './images/alert-green.png'
@@ -83,6 +83,16 @@ function Guage(props) {
             <Typography align="center">{(props.gridUsedSpace).toFixed(2)} PB Used</Typography>
             <Typography align="center">{(props.gridTotalSize).toFixed(2)} PB Total  </Typography>
           </Grid>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
+            <GaugeChart id="gauge-chart2"
+              nrOfLevels={20}
+              colors={["#FF0000", "#33FF4C"]}
+              textColor="#464A4F"
+              percent={props.gridCpuEfficiency}
+              className={classes.chartStyle}
+            />
+            <Typography align="center">Job Efficiency</Typography>
+          </Grid>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=")}>
             <img src={gridAlertImage} alt="alert" className={classes.imageStyle} />
             <Typography align="center">{props.gridAlertsCount} Alerts</Typography>
@@ -116,6 +126,16 @@ function Guage(props) {
             <Typography align="center">Disk Storage </Typography>
             <Typography align="center">{(props.siteSesUsedSpace).toFixed(2)} PB Used</Typography>
             <Typography align="center">{(props.siteSesTotalSize ).toFixed(2)} PB Total</Typography>
+          </Grid>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
+            <GaugeChart id="gauge-chart2"
+              nrOfLevels={20}
+              colors={["#FF0000", "#33FF4C"]}
+              textColor="#464A4F"
+              percent={props.siteCpuEfficiency}
+              className={classes.chartStyle}
+            />
+            <Typography align="center">Job Efficiency</Typography>
           </Grid>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=" + localStorage.getItem(Config.siteList))}>
             <img src={siteAlertImage} alt="alert" className={classes.imageStyle} />

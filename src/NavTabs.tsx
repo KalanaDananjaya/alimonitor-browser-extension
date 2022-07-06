@@ -84,9 +84,11 @@ function NavTabs(props) {
   })
   const [gridRunningJobsPerc, setGridRunningJobsPerc] = useState(0);
   const [gridStorageUsedPerc, setGridStorageUsedPerc] = useState(0);
+  const [gridCpuEfficiency, setGridCpuEfficiency] = useState(0);
   const [gridAlertsCount, setGridAlertsCount] = useState(0)
   const [siteRunningJobsPerc, setSiteRunningJobsPerc] = useState(0);
   const [siteStorageUsedPerc, setSiteStorageUsedPerc] = useState(0);
+  const [siteCpuEfficiency, setSiteCpuEfficiency] = useState(0);
   const [siteAlertsCount, setSiteAlertsCount] = useState(0);
   const [siteSeUrl, setSiteSeUrl] = useState("");
   const [error, setError] = useState(null);
@@ -131,6 +133,7 @@ function NavTabs(props) {
         let gridStorageUsedLocal = gridStatusDataObj.gridUsedSpace / gridStatusDataObj.gridTotalSize
         setGridRunningJobsPerc(isNaN(gridRunningJobsPercLocal)? 0: gridRunningJobsPercLocal);
         setGridStorageUsedPerc(isNaN(gridStorageUsedLocal)? 0: gridStorageUsedLocal);
+        setGridCpuEfficiency(isNaN(gridStatusDataObj.cpuEfficiency.TOTALS)? 0: gridStatusDataObj.cpuEfficiency.TOTALS/100);
         setGridAlertsCount(gridStatusDataObj.gridTotalIssues);
 
         // Site specific data
@@ -139,6 +142,7 @@ function NavTabs(props) {
         let siteAlertCount = gridStatusDataObj.issues.csIssues.length + gridStatusDataObj.issues.siteIssues.length
         setSiteRunningJobsPerc(isNaN(siteRunningJobsPercLocal)? 0: siteRunningJobsPercLocal);
         setSiteStorageUsedPerc(isNaN(siteStorageUsedLocal)? 0: siteStorageUsedLocal);
+        setSiteCpuEfficiency(isNaN(gridStatusDataObj.cpuEfficiency.Filtered)? 0: gridStatusDataObj.cpuEfficiency.Filtered/100);
         setSiteAlertsCount(siteAlertCount);
         setIsLoaded(true);
       })
@@ -185,10 +189,10 @@ function NavTabs(props) {
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
             <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate}  siteActiveJobs={gridData.siteActiveJobs} siteMaxActiveJobs={gridData.siteMaxActiveJobs} siteSesUsedSpace={gridData.siteSesUsedSpace} siteSesTotalSize={gridData.siteSesTotalSize} siteAlertsCount={siteAlertsCount} siteRunningJobsPerc={siteRunningJobsPerc} siteStorageUsedPerc={siteStorageUsedPerc} siteSeUrl={siteSeUrl}
-            ></Guages>
+            siteCpuEfficiency={siteCpuEfficiency}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}  gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}  gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc} gridCpuEfficiency={gridCpuEfficiency}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={2} dir={theme.direction}>
             <Alerts issues={gridData.issues} createTab={props.createTab}></Alerts>

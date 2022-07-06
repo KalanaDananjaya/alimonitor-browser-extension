@@ -5,7 +5,6 @@
   "author": {
     "name": "Kalana Wijethunga"
   },
-  "proxy": "http://alimonitor.cern.ch",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

@@ -51,7 +51,7 @@ function Composition(props) {
     return (
         <div style={{ width: "100%", display: 'inline-block', textAlign: 'center', textAlignLast: 'center'}}>
             <PieChart data={data} style={{ height: '300px', width: '50%' }} label={({ dataEntry }) => {
-                if (dataEntry.value > 100) {
+                if (dataEntry.value > 5000) {
                     return dataEntry.title;
                 } else {
                     return ''
