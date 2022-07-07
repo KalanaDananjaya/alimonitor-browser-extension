@@ -92,6 +92,14 @@ function NavTabs(props) {
   const [siteAlertsCount, setSiteAlertsCount] = useState(0);
   const [siteSeUrl, setSiteSeUrl] = useState("");
   const [error, setError] = useState(null);
+  const [gridLanIn, setGridLanIn] = useState(0); 
+  const [gridLanOut, setGridLanOut] = useState(0); 
+  const [gridWanIn, setGridWanIn] = useState(0); 
+  const [gridWanOut, setGridWanOut] = useState(0); 
+  const [siteLanIn, setSiteLanIn] = useState(0);
+  const [siteLanOut, setSiteLanOut] = useState(0);
+  const [siteWanIn, setSiteWanIn] = useState(0);
+  const [siteWanOut, setSiteWanOut] = useState(0);
 
   const updateGridData = () => {
     const storedSiteList = localStorage.getItem(Config.siteList)
@@ -135,6 +143,10 @@ function NavTabs(props) {
         setGridStorageUsedPerc(isNaN(gridStorageUsedLocal)? 0: gridStorageUsedLocal);
         setGridCpuEfficiency(isNaN(gridStatusDataObj.cpuEfficiency.TOTALS)? 0: gridStatusDataObj.cpuEfficiency.TOTALS/100);
         setGridAlertsCount(gridStatusDataObj.gridTotalIssues);
+        setGridLanIn(gridStatusData.LanWanTraffic.TOTALS.LAN_IN/1000000000)
+        setGridLanOut(gridStatusData.LanWanTraffic.TOTALS.LAN_OUT/1000000000)
+        setGridWanIn(gridStatusData.LanWanTraffic.TOTALS.WAN_IN/1000000000)
+        setGridWanOut(gridStatusData.LanWanTraffic.TOTALS.WAN_OUT/1000000000)
 
         // Site specific data
         let siteRunningJobsPercLocal = gridStatusDataObj.siteActiveJobs / gridStatusDataObj.siteMaxActiveJobs
@@ -145,6 +157,10 @@ function NavTabs(props) {
         setSiteCpuEfficiency(isNaN(gridStatusDataObj.cpuEfficiency.Filtered)? 0: gridStatusDataObj.cpuEfficiency.Filtered/100);
         setSiteAlertsCount(siteAlertCount);
         setIsLoaded(true);
+        setSiteLanIn(gridStatusData.LanWanTraffic.Filtered.LAN_IN/1000000000)
+        setSiteLanOut(gridStatusData.LanWanTraffic.Filtered.LAN_OUT/1000000000)
+        setSiteWanIn(gridStatusData.LanWanTraffic.Filtered.WAN_IN/1000000000)
+        setSiteWanOut(gridStatusData.LanWanTraffic.Filtered.WAN_OUT/1000000000)
       })
       .catch(function (error) {
         setError(error)
@@ -189,10 +205,11 @@ function NavTabs(props) {
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
             <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate}  siteActiveJobs={gridData.siteActiveJobs} siteMaxActiveJobs={gridData.siteMaxActiveJobs} siteSesUsedSpace={gridData.siteSesUsedSpace} siteSesTotalSize={gridData.siteSesTotalSize} siteAlertsCount={siteAlertsCount} siteRunningJobsPerc={siteRunningJobsPerc} siteStorageUsedPerc={siteStorageUsedPerc} siteSeUrl={siteSeUrl}
-            siteCpuEfficiency={siteCpuEfficiency}></Guages>
+            siteCpuEfficiency={siteCpuEfficiency} siteLanIn={siteLanIn} siteLanOut={siteLanOut} siteWanIn={siteWanIn} siteWanOut={siteWanOut}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}  gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc} gridCpuEfficiency={gridCpuEfficiency}></Guages>
+            <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate}  gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc} gridCpuEfficiency={gridCpuEfficiency}
+            gridLanIn={gridLanIn} gridLanOut={gridLanOut} gridWanIn={gridWanIn} gridWanOut={gridWanOut}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={2} dir={theme.direction}>
             <Alerts issues={gridData.issues} createTab={props.createTab}></Alerts>
