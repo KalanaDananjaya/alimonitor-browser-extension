@@ -1,32 +1,29 @@
 import * as React from 'react';
-import {LinearGauge} from '@progress/kendo-react-gauges';
+import { LinearGauge } from '@progress/kendo-react-gauges';
 
 function LinearGaugeComponent(props) {
-    const [value, setValue] = React.useState(0);
-    React.useEffect(() => {
-        setInterval(
-            () => {
-                setValue(props.value)
-            },
-            500);
-    }, [])
-
+    const gaugeStyles = {
+        display: 'block',
+        height: 120
+    };
+    const pointer = {
+        value: props.value
+    };
     const linearOptions: any = {
-        value: value,
         shape: 'arrow',
         scale: {
-            minorUnit: 2,
-            majorUnit: 10,
-            max: 100,
+            minorUnit: 5,
+            majorUnit: 25,
+            max: props.maxValue,
             ranges: [
-                { from: 40, to: 60, color: "#ffc700" },
-                { from: 60, to: 80, color: "#ff7a00" },
-                { from: 80, to: 100, color: "#c20000" },
+                { from: props.maxValue / 5 * 2, to: props.maxValue / 5 * 3, color: "#ffc700" },
+                { from: props.maxValue / 5 * 3, to: props.maxValue / 5 * 4, color: "#ff7a00" },
+                { from: props.maxValue / 5 * 4, to: props.maxValue, color: "#c20000" },
             ],
         },
     };
     return (
-        <LinearGauge {...linearOptions} />
+        <LinearGauge style={gaugeStyles} pointer={pointer} {...linearOptions} />
     );
 }
 export default LinearGaugeComponent;

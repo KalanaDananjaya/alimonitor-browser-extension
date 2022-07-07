@@ -21,7 +21,7 @@ function Guage(props) {
     imageStyle : {
       display: 'block',
       margin: 'auto',
-      width: '50%',
+      width: '73%',
       resizeMode: 'contain'
     },
   }));
@@ -98,25 +98,23 @@ function Guage(props) {
             <img src={gridAlertImage} alt="alert" className={classes.imageStyle} />
             <Typography align="center">{props.gridAlertsCount} Alerts</Typography>
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.gridLanIn}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.gridLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.gridLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.gridLanOut}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.gridLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.gridLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.gridWanIn}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.gridWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.gridWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.gridWanOut}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.gridWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.gridWanOut).toFixed(2)} Gbps</Typography>
           </Grid>
@@ -164,25 +162,23 @@ function Guage(props) {
             <img src={siteAlertImage} alt="alert" className={classes.imageStyle} />
             <Typography align="center">{props.siteAlertsCount} Alerts</Typography>
           </Grid>
-        </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.siteLanIn}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.siteLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.siteLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.siteLanOut}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.siteLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.siteLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.siteWanIn}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.siteWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.siteWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={3}>
-            <LinearGaugeComponent value={props.siteWanOut}/>
+          <Grid item xs={2} md={2} lg={2}>
+            <LinearGaugeComponent value={props.siteWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.siteWanOut).toFixed(2)} Gbps</Typography>
           </Grid>
