@@ -83,7 +83,7 @@ function Guage(props) {
             <Typography align="center">{(props.gridUsedSpace).toFixed(2)} PB Used</Typography>
             <Typography align="center">{(props.gridTotalSize).toFixed(2)} PB Total  </Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "efficiency", "http://alimonitor.cern.ch/display?page=jobResUsageSum_time_cpu")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
@@ -127,7 +127,7 @@ function Guage(props) {
             <Typography align="center">{(props.siteSesUsedSpace).toFixed(2)} PB Used</Typography>
             <Typography align="center">{(props.siteSesTotalSize ).toFixed(2)} PB Total</Typography>
           </Grid>
-          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "se", "http://alimonitor.cern.ch/stats?page=SE/table")}>
+          <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "efficiency", "http://alimonitor.cern.ch/display?page=jobResUsageSum_time_cpu")}>
             <GaugeChart id="gauge-chart2"
               nrOfLevels={20}
               colors={["#FF0000", "#33FF4C"]}
