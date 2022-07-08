@@ -3,8 +3,8 @@ import GaugeChart from 'react-gauge-chart';
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Config from './Config'
-import AlertGreen from './images/alert-green.png'
-import AlertRed from './images/alert-red.png'
+import AlertGreen from './images/alertGreen.png'
+import AlertRed from './images/alertRed.png'
 import { changeIcon }  from './Util';
 import LinearGaugeComponent from './LinearGauge';
 
@@ -21,7 +21,7 @@ function Guage(props) {
     imageStyle : {
       display: 'block',
       margin: 'auto',
-      width: '73%',
+      width: '86%',
       resizeMode: 'contain'
     },
   }));
