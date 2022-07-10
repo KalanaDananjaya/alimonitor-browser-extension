@@ -1,8 +1,8 @@
-export const changeIcon = (color) => {
-    // browser.browserAction.setIcon({
-    //   path: "./images/alert-" + color + ".png"
-    // })
-  }
+// export const changeIcon = (color) => {
+//   browser.browserAction.setIcon({
+//      path: "./images/alert-" + color + ".png"
+//   })
+// }
 
 // export const createTab = (url) => {
 //     // If a tab is opened by the extension, keep reusing it

@@ -3,9 +3,9 @@ import GaugeChart from 'react-gauge-chart';
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Config from './Config'
-import AlertGreen from './images/alertGreen.png'
-import AlertRed from './images/alertRed.png'
-import { changeIcon }  from './Util';
+import AlertGreen from './images/alert-green.png'
+import AlertRed from './images/alert-red.png'
+// import { changeIcon }  from './Util';
 import LinearGaugeComponent from './LinearGauge';
 
 function Guage(props) {
@@ -41,6 +41,12 @@ function Guage(props) {
     } else {
         return ({opacity: 100})
     }
+  }
+
+  const changeIcon = (color) => {
+    browser.browserAction.setIcon({
+       path: "./images/alert-" + color + ".png"
+    })
   }
 
   var siteAlertImage;
