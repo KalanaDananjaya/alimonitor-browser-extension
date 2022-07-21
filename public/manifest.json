@@ -1,7 +1,7 @@
 {
   "name": "AliMonitor",
   "description": "AliMonitor Extension",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "manifest_version": 2,
   "homepage_url": "https://gitlab.cern.ch/kwijethu/alimonitor-browser-extension",
   "browser_action": {
