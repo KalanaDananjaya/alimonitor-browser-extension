@@ -21,7 +21,8 @@ function Guage(props) {
     imageStyle : {
       display: 'block',
       margin: 'auto',
-      width: '86%',
+      width: '60%',
+      marginTop: "20px",
       resizeMode: 'contain'
     },
   }));

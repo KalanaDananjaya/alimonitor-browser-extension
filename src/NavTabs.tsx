@@ -194,7 +194,7 @@ function NavTabs(props) {
           <Tab label="Site" {...a11yProps(0)}/>
           <Tab label="Grid" {...a11yProps(1)} />
           <Tab label="Alerts" {...a11yProps(2)} />
-          <Tab label="Jobs" {...a11yProps(3)} />
+          <Tab label="Active Jobs" {...a11yProps(3)} />
           <Tab label="Config" {...a11yProps(4)} />
         </Tabs>
       </AppBar>
