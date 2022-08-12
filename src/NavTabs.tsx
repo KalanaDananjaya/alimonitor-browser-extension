@@ -215,7 +215,7 @@ function NavTabs(props) {
             <Alerts issues={gridData.issues} createTab={props.createTab}></Alerts>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={3} dir={theme.direction}>
-            <Composition composition={gridData.composition}></Composition>
+            <Composition composition={gridData.composition} activeJobs={gridData.gridActiveJobs}></Composition>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={4} dir={theme.direction}>
             <Form menuOpened={props.menuOpened} forceUpdate={props.forceUpdate} setTabIndex={props.setTabIndex}></Form>

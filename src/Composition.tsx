@@ -50,9 +50,24 @@ function Composition(props) {
 
     return (
         <div style={{ width: "100%", display: 'inline-block', textAlign: 'center', textAlignLast: 'center'}}>
-            <PieChart data={data} style={{ height: '300px', width: '50%' }} label={({ dataEntry }) => {
+            <PieChart data={data} style={{ height: '300px', width: '50%' }} label={({ x, y, dx, dy, dataEntry }) => {
                 if (dataEntry.value > 5000) {
-                    return dataEntry.title;
+                    return (
+                        <text
+                        x={x}
+                        y={y}
+                        dx={dx}
+                        dy={dy}
+                        dominant-baseline="central"
+                        text-anchor="middle"
+                        style={{
+                            fill: '#fff', pointerEvents: 'none', fontSize: '5px'
+                        }}
+                        >
+                        <tspan x={x} y={y} dx={dx} dy={dy}>{dataEntry.title}</tspan>
+                        <tspan x={x} y={y+5} dx={dx} dy={dy}>{`${((dataEntry.value/props.activeJobs)*100).toFixed(2)}%`}</tspan>
+                    </text>
+                    );
                 } else {
                     return ''
                 }
@@ -79,9 +94,11 @@ function Composition(props) {
                     <TableCell component="th" scope="row">
                         {row.title}
                     </TableCell>
-                    <TableCell>{row.value}</TableCell>
+                    <TableCell align="right">{((row.value/props.activeJobs)*100).toFixed(2)}</TableCell>
                     </TableRow>
                 ))}
+                    <TableCell>Total Jobs</TableCell>
+                    <TableCell align="right">{props.activeJobs}</TableCell>
                 </TableBody>
             </Table>
             </TableContainer>
