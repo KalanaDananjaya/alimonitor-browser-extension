@@ -49,7 +49,7 @@ function Composition(props) {
     });
 
     return (
-        <div style={{ width: "100%", display: 'inline-block', textAlign: 'center', textAlignLast: 'center'}}>
+        <div style={{ width: "100%", display: 'inline-block', textAlign: 'center'}}>
             <PieChart data={data} style={{ height: '300px', width: '50%' }} label={({ x, y, dx, dy, dataEntry }) => {
                 if (dataEntry.value > 5000) {
                     return (
@@ -75,12 +75,13 @@ function Composition(props) {
             ...defaultLabelStyle,
         }} />
 
-            <TableContainer component={Paper} sx = {{ maxWidth: '200px', float: 'right'}}>
+            <TableContainer component={Paper} sx = {{ maxWidth: '310px', float: 'right'}}>
             <Table aria-label="simple table">
                 <TableHead>
                 <TableRow>
                     <TableCell>Type</TableCell>
-                    <TableCell># Jobs</TableCell>
+                    <TableCell align="right"># Jobs</TableCell>
+                    <TableCell align="right">Job %</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
@@ -94,11 +95,13 @@ function Composition(props) {
                     <TableCell component="th" scope="row">
                         {row.title}
                     </TableCell>
-                    <TableCell align="right">{((row.value/props.activeJobs)*100).toFixed(2)}</TableCell>
+                    <TableCell align="right">{row.value}</TableCell>
+                    <TableCell align="right">{((row.value/props.activeJobs)*100).toFixed(2)}%</TableCell>
                     </TableRow>
                 ))}
                     <TableCell>Total Jobs</TableCell>
                     <TableCell align="right">{props.activeJobs}</TableCell>
+                    <TableCell align="right">100%</TableCell>
                 </TableBody>
             </Table>
             </TableContainer>

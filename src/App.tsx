@@ -6,6 +6,7 @@ import Menu from './Menu';
 import NavTabs from './NavTabs';
 import Config from './Config';
 import FavIcon from './images/ml2.png';
+import {version} from "../package.json";
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
       <div style={{padding: "1%", width: '720px'}}>
         <Menu menuOpened={menuOpened} setMenuOpened={setMenuOpened} createTab={createTab}></Menu>
         <div className="Title" style={{textAlign: "center", padding: "0% 20% 0% 20%"}}>
+        <Typography style={{position: 'absolute', right: '45px', fontSize: 10}}>v{version}</Typography>
           <img src={FavIcon} alt="icon" style={{width:"7%", alignContent: "center", marginRight: "2%"}} />
           <Typography variant="h1" style={{display: "inline-block", verticalAlign: "top"}}>ALICE Grid</Typography>
         </div>
