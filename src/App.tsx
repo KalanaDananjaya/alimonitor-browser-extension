@@ -59,11 +59,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{padding: "1%", width: '720px'}}>
+      <div style={{width: '720px'}}>
         <Menu menuOpened={menuOpened} setMenuOpened={setMenuOpened} createTab={createTab}></Menu>
         <div className="Title" style={{textAlign: "center", padding: "0% 20% 0% 20%"}}>
-        <Typography style={{position: 'absolute', right: '45px', fontSize: 10}}>v{version}</Typography>
-          <img src={FavIcon} alt="icon" style={{width:"7%", alignContent: "center", marginRight: "2%"}} />
+        <Typography style={{position: 'absolute', right: '10px', fontSize: 10}}>v{version}</Typography>
+          <img src={FavIcon} alt="icon" style={{width:"7%", alignContent: "center", marginRight: "2%", marginTop: '5px'}} />
           <Typography variant="h1" style={{display: "inline-block", verticalAlign: "top"}}>ALICE Grid</Typography>
         </div>
         <NavTabs menuOpened={menuOpened} siteList={localStorage.getItem(Config.siteList)} forceUpdate={forceUpdate} tabIndex={tabIndex} setTabIndex={setTabIndex} createTab={createTab}></NavTabs>

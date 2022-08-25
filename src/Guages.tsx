@@ -7,6 +7,8 @@ import AlertGreen from './images/alert-green.png'
 import AlertRed from './images/alert-red.png'
 // import { changeIcon }  from './Util';
 import LinearGaugeComponent from './LinearGauge';
+import Alert from '@mui/material/Alert';
+import { padding } from '@mui/system';
 
 function Guage(props) {
 
@@ -68,6 +70,7 @@ function Guage(props) {
   if (props.type === "Grid") {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
+      { props.gridAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=")}>There are {props.gridAlertsCount} alerts — check them out!</Alert>: false}
         <Grid container spacing={3}>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
@@ -101,26 +104,22 @@ function Guage(props) {
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=")}>
-            <img src={gridAlertImage} alt="alert" className={classes.imageStyle} />
-            <Typography align="center">{props.gridAlertsCount} Alerts</Typography>
-          </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.gridLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.gridLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.gridLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.gridLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.gridWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.gridWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.gridWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.gridWanOut).toFixed(2)} Gbps</Typography>
@@ -132,6 +131,7 @@ function Guage(props) {
    else if (props.type === "Site") {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
+      { props.siteAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=" + localStorage.getItem(Config.siteList))}>There are {props.siteAlertsCount} alerts — check them out!</Alert>: false}
         <Grid container spacing={3}>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
@@ -165,26 +165,22 @@ function Guage(props) {
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} classes={{root: classes.item}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=" + localStorage.getItem(Config.siteList))}>
-            <img src={siteAlertImage} alt="alert" className={classes.imageStyle} />
-            <Typography align="center">{props.siteAlertsCount} Alerts</Typography>
-          </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.siteLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.siteLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.siteLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.siteLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2} style={{marginRight: "25px"}}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.siteWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.siteWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={2} md={2} lg={2}>
+          <Grid item xs={3} md={3} lg={3}>
             <LinearGaugeComponent value={props.siteWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.siteWanOut).toFixed(2)} Gbps</Typography>

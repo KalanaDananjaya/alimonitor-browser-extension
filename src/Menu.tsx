@@ -124,6 +124,7 @@ function Menu(props) {
             defaultExpanded={['root']}
             defaultExpandIcon={<ChevronRightIcon />}
             onNodeSelect = {(ele,node)=>{handleTreeItemClick(ele,node)}}
+            style={{marginTop: '10px'}}
         >
             {renderTree(menuItems)}
         </TreeView>
