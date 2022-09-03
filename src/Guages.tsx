@@ -79,6 +79,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={ props.gridRunningJobsPerc}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Active Jobs : {props.gridActiveJobs}</Typography>
           </Grid>
@@ -89,6 +90,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={props.gridStorageUsedPerc}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Disk Storage </Typography>
             <Typography align="center">{(props.gridUsedSpace).toFixed(2)} PB Used</Typography>
@@ -101,6 +103,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={props.gridCpuEfficiency}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>
@@ -140,6 +143,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={props.siteRunningJobsPerc}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Active Jobs :  {props.siteActiveJobs}</Typography>
           </Grid>
@@ -150,6 +154,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={props.siteStorageUsedPerc}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Disk Storage </Typography>
             <Typography align="center">{(props.siteSesUsedSpace).toFixed(2)} PB Used</Typography>
@@ -162,6 +167,7 @@ function Guage(props) {
               textColor="#464A4F"
               percent={props.siteCpuEfficiency}
               className={classes.chartStyle}
+              animate={false}
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>

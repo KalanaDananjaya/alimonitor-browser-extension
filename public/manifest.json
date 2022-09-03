@@ -17,6 +17,11 @@
     "96": "./images/ml2.png"
   },
   "permissions": [
-    "http://alimonitor.cern.ch/*"
-  ]
+    "alarms",
+    "https://alimonitor.cern.ch/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
 }

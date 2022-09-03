@@ -1,40 +1,38 @@
-// console.log('Hello, world!'); 
-// // window.setInterval(function() {
-// //     console.log('Hello, world!'); 
-// //   }, 1);
+let portFromCS;
+let url;
 
+function connected(p) {
+  portFromCS = p;
+  portFromCS.onMessage.addListener((message) => {
+    console.log("In background script, received message from content script")
+    url = message.url
+    if (message.getData) {
+      httpGet(url)
+    }
+  });
+}
 
-// browser.runtime.onInstalled.addListener(() => {
-//   console.log('onInstalled...');
-//   // create alarm after extension is installed / upgraded
-//   browser.alarms.create('refresh', { periodInMinutes: 0.1 });
-// });
+browser.runtime.onConnect.addListener(connected);
 
-// browser.alarms.onAlarm.addListener((alarm) => {
-//   console.log(alarm.name); // refresh
-//   helloWorld();
-// });
+browser.runtime.onInstalled.addListener(() => {
+  console.log('onInstalled...');
+  // create alarm after extension is installed / upgraded
+  browser.alarms.create('refresh', { periodInMinutes: 0.05 });
+});
 
-// function helloWorld() {
-  
-//   response = httpGet("http://alimonitor.cern.ch/plugin/pluginData.jsp")
-//   console.log("response", response);
-// }
+browser.alarms.onAlarm.addListener((alarm) => {
+  console.log(alarm.name); // refresh
+  if (url !== undefined) {
+    httpGet();
+  }
+});
 
-// function httpGet(url)
-// {
-//     // var xmlHttp = new XMLHttpRequest();
-//     // xmlHttp.open( "GET", url, false ); // false for synchronous request
-//     // console.log("sending")
-//     // xmlHttp.send( null );
-//     // console.log("resp",xmlHttp.responseText)
-//     // return xmlHttp.responseText;
-//     window.fetch(url).then(function(response) {
-//       return response.json();
-//     }).then(function(data) {
-//       console.log(data);
-//     }).catch(function() {
-//       console.log("Booo");
-//     });
-    
-// }
+function httpGet() {
+  window.fetch(url).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    portFromCS.postMessage({ data });
+  }).catch(function () {
+    console.log("Error, no reciever port");
+  });
+}
