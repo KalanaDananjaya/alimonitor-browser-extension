@@ -9,8 +9,6 @@ import Guages from './Guages';
 import Form from './Form'
 import Alerts from './Alerts'
 import Composition from './Composition'
-
-import axios from 'axios';
 import Config from './Config'
 import { useEffect, useState } from 'react'
 
@@ -102,7 +100,7 @@ function NavTabs(props) {
   const [siteWanOut, setSiteWanOut] = useState(0);
 
   const updateGridData = (response) => {
-    let gridStatusData = response.data
+    let gridStatusData = response.result
     console.log(gridStatusData)
     let gridStatusDataObj = {
       siteActiveJobs: gridStatusData.activeJobs,
@@ -155,7 +153,6 @@ function NavTabs(props) {
   let myPort = browser.runtime.connect({ name: "port-from-cs" });
 
   myPort.onMessage.addListener((data) => {
-    console.log("In content script, received message from background script: ");
     console.log(data);
     updateGridData(data);
   });

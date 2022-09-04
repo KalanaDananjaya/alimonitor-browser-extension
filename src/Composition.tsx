@@ -36,7 +36,7 @@ function Composition(props) {
     
     const classes = useStyles();
 
-    const colorArray = [ "#A704FE", "#52D726", "#04CCFE", "#FF7300", "#007ED6", "#FFEC00", "#FF0000", "#617169"]
+    const colorArray = [ "#EA46C5", "#006661", "#04CCFE", "#ff9738", "#007ED6", "#EACE46", "#efbbbf", "#617169"]
     function createData(title: string, value: number, index: number) {
         const color = colorArray[index];
         return { title, value, color };

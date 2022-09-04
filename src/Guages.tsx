@@ -3,12 +3,8 @@ import GaugeChart from 'react-gauge-chart';
 import { Grid, Typography } from '@material-ui/core'
 import { makeStyles } from "@material-ui/core/styles";
 import Config from './Config'
-import AlertGreen from './images/alert-green.png'
-import AlertRed from './images/alert-red.png'
-// import { changeIcon }  from './Util';
 import LinearGaugeComponent from './LinearGauge';
 import Alert from '@mui/material/Alert';
-import { padding } from '@mui/system';
 
 function Guage(props) {
 
@@ -44,27 +40,6 @@ function Guage(props) {
     } else {
         return ({opacity: 100})
     }
-  }
-
-  const changeIcon = (color) => {
-    browser.browserAction.setIcon({
-       path: "./images/alert-" + color + ".png"
-    })
-  }
-
-  var siteAlertImage;
-  var gridAlertImage;
-  if (props.siteAlertsCount > 0) {
-    siteAlertImage = AlertRed;
-    changeIcon("red");
-  } else {
-    siteAlertImage = AlertGreen;
-    changeIcon("green");
-  }
-  if (props.gridAlertsCount > 0) {
-    gridAlertImage = AlertRed;
-  } else {
-    gridAlertImage = AlertGreen;
   }
 
   if (props.type === "Grid") {
