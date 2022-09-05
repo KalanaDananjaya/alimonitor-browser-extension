@@ -201,11 +201,11 @@ function NavTabs(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={props.tabIndex} index={0} dir={theme.direction}>
-          <Guages menuOpened={props.menuOpened} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate} siteActiveJobs={gridData.siteActiveJobs} siteMaxActiveJobs={gridData.siteMaxActiveJobs} siteSesUsedSpace={gridData.siteSesUsedSpace} siteSesTotalSize={gridData.siteSesTotalSize} siteAlertsCount={siteAlertsCount} siteRunningJobsPerc={siteRunningJobsPerc} siteStorageUsedPerc={siteStorageUsedPerc} siteSeUrl={siteSeUrl}
+          <Guages menuOpened={props.menuOpened} handleChangeIndex={handleChangeIndex} type="Site" siteList={props.siteList} forceUpdate={props.forceUpdate} siteActiveJobs={gridData.siteActiveJobs} siteMaxActiveJobs={gridData.siteMaxActiveJobs} siteSesUsedSpace={gridData.siteSesUsedSpace} siteSesTotalSize={gridData.siteSesTotalSize} siteAlertsCount={siteAlertsCount} siteRunningJobsPerc={siteRunningJobsPerc} siteStorageUsedPerc={siteStorageUsedPerc} siteSeUrl={siteSeUrl}
             siteCpuEfficiency={siteCpuEfficiency} siteLanIn={siteLanIn} siteLanOut={siteLanOut} siteWanIn={siteWanIn} siteWanOut={siteWanOut} createTab={props.createTab}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={1} dir={theme.direction}>
-          <Guages menuOpened={props.menuOpened} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate} gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc} gridCpuEfficiency={gridCpuEfficiency}
+          <Guages menuOpened={props.menuOpened} handleChangeIndex={handleChangeIndex} type="Grid" siteList={props.siteList} forceUpdate={props.forceUpdate} gridActiveJobs={gridData.gridActiveJobs} gridMaxActiveJobs={gridData.gridMaxActiveJobs} gridUsedSpace={gridData.gridUsedSpace} gridTotalSize={gridData.gridTotalSize} gridAlertsCount={gridAlertsCount} gridRunningJobsPerc={gridRunningJobsPerc} gridStorageUsedPerc={gridStorageUsedPerc} gridCpuEfficiency={gridCpuEfficiency}
             gridLanIn={gridLanIn} gridLanOut={gridLanOut} gridWanIn={gridWanIn} gridWanOut={gridWanOut} createTab={props.createTab} siteAlertsCount={siteAlertsCount}></Guages>
         </TabPanel>
         <TabPanel value={props.tabIndex} index={2} dir={theme.direction}>

@@ -45,7 +45,7 @@ function Guage(props) {
   if (props.type === "Grid") {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
-      { props.gridAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=")}>There are {props.gridAlertsCount} alerts — check them out!</Alert>: false}
+      { props.gridAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} classes={{root: classes.item}} onClick={() => props.handleChangeIndex(2)}>There are {props.gridAlertsCount} alerts, Check them out!</Alert>: false}
         <Grid container spacing={3}>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
@@ -82,22 +82,22 @@ function Guage(props) {
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.gridLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.gridLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.gridLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.gridLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.gridWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.gridWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.gridWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.gridWanOut).toFixed(2)} Gbps</Typography>
@@ -109,7 +109,7 @@ function Guage(props) {
    else if (props.type === "Site") {
     return (
       <div className="guages" style={mainStyle(props.menuOpened)}>
-      { props.siteAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} onClick={() => handleClick(props.type, "alerts", "http://alimonitor.cern.ch/siteinfo/issues.jsp?name=" + localStorage.getItem(Config.siteList))}>There are {props.siteAlertsCount} alerts — check them out!</Alert>: false}
+      { props.siteAlertsCount > 0? <Alert severity="error" style={{marginLeft: "390px", marginBottom: "5px"}} classes={{root: classes.item}} onClick={() => props.handleChangeIndex(2)}>There are {props.siteAlertsCount} alerts, Check them out!</Alert>: false}
         <Grid container spacing={3}>
           <Grid item xs={4} md={4} lg={4} classes={{root: classes.item}} onClick={() => handleClick(props.type, "jobs", "http://alimonitor.cern.ch/display?page=jobStatusSites_RUNNING")}>
             <GaugeChart id="gauge-chart2"
@@ -146,22 +146,22 @@ function Guage(props) {
             />
             <Typography align="center">Job Efficiency</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.siteLanIn} maxValue={100} />
             <Typography align="center">LAN IN</Typography>
             <Typography align="center">{(props.siteLanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.siteLanOut} maxValue={100} />
             <Typography align="center">LAN OUT</Typography>
             <Typography align="center">{(props.siteLanOut).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.siteWanIn} maxValue={100} />
             <Typography align="center">WAN IN</Typography>
             <Typography align="center">{(props.siteWanIn).toFixed(2)} Gbps</Typography>
           </Grid>
-          <Grid item xs={3} md={3} lg={3}>
+          <Grid item xs={3} md={3} lg={3} classes={{root: classes.item}} onClick={() => handleClick(props.type, "Traffic", "http://alimonitor.cern.ch/display?page=xrdagg/total")}>
             <LinearGaugeComponent value={props.siteWanOut} maxValue={100} />
             <Typography align="center">WAN OUT</Typography>
             <Typography align="center">{(props.siteWanOut).toFixed(2)} Gbps</Typography>

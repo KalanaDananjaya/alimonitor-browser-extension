@@ -4,7 +4,6 @@ let url;
 function connected(p) {
   portFromCS = p;
   portFromCS.onMessage.addListener((message) => {
-    console.log("In background script, received message from content script")
     console.log(message.url)
     url = message.url
     if (message.getData) {
@@ -19,7 +18,7 @@ browser.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');
   browser.tabs.create({ url: "empty.html" }).then(() => {
     browser.tabs.executeScript({
-      code: `alert("Please add your browser cert"); window.close();`
+      code: `alert("Please ensure you have an ALICE Grid Certificate installed on your browser to ensure proper functionality"); window.close();`
     });
   });
   // create alarm after extension is installed / upgraded
